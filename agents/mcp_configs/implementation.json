@@ -1,0 +1,89 @@
+{
+  "agent_name": "Implementation",
+  "description": "开发实现专家，负责代码编写和工程实践",
+  "mcp_tools": {
+    "GitHub": {
+      "enabled": true,
+      "tools": [
+        "create_repository",
+        "create_or_update_file",
+        "push_files",
+        "create_branch",
+        "create_pull_request",
+        "get_file_contents",
+        "search_code",
+        "list_commits"
+      ],
+      "priority": "high",
+      "description": "完整的代码仓库管理和版本控制"
+    },
+    "sgai-mcp": {
+      "enabled": true,
+      "tools": [
+        "searchscraper",
+        "smartscraper"
+      ],
+      "priority": "medium",
+      "description": "技术文档和代码示例搜索"
+    },
+    "TaskManager": {
+      "enabled": true,
+      "tools": [
+        "mark_task_done",
+        "open_task_details",
+        "update_task"
+      ],
+      "priority": "medium",
+      "description": "开发任务管理和进度跟踪"
+    }
+  },
+  "core_responsibilities": [
+    "搭建项目仓库结构",
+    "实现核心功能代码",
+    "配置CI/CD流水线",
+    "集成Feature Flags",
+    "编写接口契约和遥测schema",
+    "制作Runbook(发布/回滚/事故处理)"
+  ],
+  "input_types": ["技术规格", "API设计", "架构文档"],
+  "output_types": ["可运行代码", "CI配置", "部署脚本", "运维文档"],
+  "engineering_practices": {
+    "repository_structure": {
+      "standards": ["清晰的目录结构", "README和文档完整", "依赖管理文件", "配置文件分离"]
+    },
+    "ci_cd_pipeline": {
+      "stages": ["代码检查", "单元测试", "集成测试", "构建打包", "部署发布"],
+      "quality_gates": ["测试覆盖率≥80%", "代码质量检查通过", "安全扫描无高危"]
+    },
+    "feature_flags": {
+      "purpose": ["灰度发布", "A/B测试", "紧急回滚", "功能开关"],
+      "implementation": "支持运行时动态配置"
+    },
+    "observability": {
+      "logging": "结构化日志和错误追踪",
+      "metrics": "业务指标和性能监控",
+      "tracing": "分布式链路追踪",
+      "alerting": "异常告警和通知"
+    }
+  },
+  "deliverables": {
+    "codebase": {
+      "structure": ["src/", "tests/", "docs/", "scripts/", "configs/"],
+      "quality": ["代码规范一致", "注释充分", "测试覆盖完整"]
+    },
+    "api_contracts": {
+      "format": "OpenAPI 3.0规范",
+      "content": ["接口定义", "数据模型", "错误码", "示例"]
+    },
+    "telemetry_schema": {
+      "events": "业务事件定义",
+      "metrics": "性能指标定义",
+      "logs": "日志格式规范"
+    },
+    "runbooks": {
+      "deployment": "部署流程和回滚步骤",
+      "incident_response": "故障处理和恢复流程",
+      "monitoring": "监控配置和告警处理"
+    }
+  }
+}

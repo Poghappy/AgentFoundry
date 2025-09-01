@@ -1,0 +1,31 @@
+{
+  "agent_name": "Router/Planner",
+  "description": "系统调度中枢，负责阶段管控和任务分发",
+  "mcp_tools": {
+    "TaskManager": {
+      "enabled": true,
+      "tools": [
+        "request_planning",
+        "get_next_task",
+        "mark_task_done",
+        "approve_task_completion",
+        "approve_request_completion",
+        "open_task_details",
+        "list_requests",
+        "add_tasks_to_request",
+        "update_task",
+        "delete_task"
+      ],
+      "priority": "high",
+      "description": "任务管理和工作流控制的核心工具"
+    }
+  },
+  "core_responsibilities": [
+    "读取项目规则和关卡检查",
+    "验证当前阶段通过条件",
+    "决定下一个执行角色与任务",
+    "管理项目整体进度"
+  ],
+  "input_types": ["项目状态", "用户指令", "阶段检查结果"],
+  "output_types": ["执行计划", "角色指派", "缺口清单", "任务分解"]
+}

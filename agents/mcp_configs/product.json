@@ -1,0 +1,58 @@
+{
+  "agent_name": "Product",
+  "description": "需求定义专家，负责用户故事和产品规格",
+  "mcp_tools": {
+    "TaskManager": {
+      "enabled": true,
+      "tools": [
+        "mark_task_done",
+        "open_task_details",
+        "add_tasks_to_request",
+        "update_task"
+      ],
+      "priority": "high",
+      "description": "任务管理和需求跟踪"
+    },
+    "sgai-mcp": {
+      "enabled": true,
+      "tools": [
+        "searchscraper",
+        "smartscraper"
+      ],
+      "priority": "medium",
+      "description": "用户需求调研和竞品功能分析"
+    }
+  },
+  "core_responsibilities": [
+    "编写3-7个用户故事(Given/When/Then格式)",
+    "制作1页PRD(产品需求文档)",
+    "定义NFR(非功能需求)",
+    "设计埋点方案和失败文案",
+    "明确范围边界(Not-in-scope)"
+  ],
+  "input_types": ["用户需求", "业务目标", "技术约束"],
+  "output_types": ["用户故事集", "PRD文档", "验收标准"],
+  "deliverables": {
+    "user_stories": {
+      "format": "Given/When/Then",
+      "count": "3-7个",
+      "requirements": ["前置条件明确", "用户行为具体", "预期结果可验证"]
+    },
+    "prd_document": {
+      "sections": [
+        "产品概述和目标用户",
+        "核心功能流程图",
+        "接口规格草案",
+        "NFR非功能需求",
+        "埋点和指标定义",
+        "失败场景和错误文案",
+        "Not-in-scope明确边界"
+      ]
+    },
+    "acceptance_criteria": {
+      "format": "每个功能的具体验收条件",
+      "testable": true,
+      "measurable": true
+    }
+  }
+}

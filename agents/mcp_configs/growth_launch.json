@@ -1,0 +1,92 @@
+{
+  "agent_name": "Growth_Launch",
+  "description": "增长发布专家，负责MVP上线和增长策略",
+  "mcp_tools": {
+    "sgai-mcp": {
+      "enabled": true,
+      "tools": [
+        "searchscraper",
+        "smartscraper",
+        "markdownify"
+      ],
+      "priority": "high",
+      "description": "市场调研和增长策略分析"
+    },
+    "GitHub": {
+      "enabled": true,
+      "tools": [
+        "create_or_update_file",
+        "push_files",
+        "get_file_contents"
+      ],
+      "priority": "medium",
+      "description": "落地页和营销材料管理"
+    },
+    "TaskManager": {
+      "enabled": true,
+      "tools": [
+        "mark_task_done",
+        "open_task_details",
+        "approve_request_completion"
+      ],
+      "priority": "medium",
+      "description": "发布任务管理和项目收尾"
+    }
+  },
+  "core_responsibilities": [
+    "设计MVP实验方案",
+    "制作落地页和营销材料",
+    "制定定价策略(双方案对比)",
+    "规划渠道A/B测试",
+    "设定样本量和停走阈值",
+    "搭建上线看板和复盘模板"
+  ],
+  "input_types": ["产品功能", "目标用户", "市场定位"],
+  "output_types": ["实验设计", "营销方案", "数据看板", "增长计划"],
+  "growth_strategy": {
+    "mvp_experiment": {
+      "hypothesis": "基于核心价值假设的实验设计",
+      "metrics": ["激活率", "留存率", "转化率", "用户满意度"],
+      "duration": "2-4周的实验周期",
+      "success_criteria": "明确的成功和失败标准"
+    },
+    "pricing_strategy": {
+      "research_methods": ["竞品定价分析", "用户支付意愿调研", "价值感知测试"],
+      "pricing_models": ["免费增值", "订阅制", "按使用量计费", "一次性付费"],
+      "ab_testing": "双定价方案对比测试"
+    },
+    "channel_strategy": {
+      "acquisition_channels": ["搜索引擎", "社交媒体", "内容营销", "合作伙伴", "直销"],
+      "channel_testing": "多渠道A/B测试和效果对比",
+      "optimization": "基于数据的渠道优化"
+    }
+  },
+  "deliverables": {
+    "landing_page": {
+      "elements": ["价值主张", "功能介绍", "用户证言", "定价信息", "CTA按钮"],
+      "optimization": "A/B测试不同版本的转化效果"
+    },
+    "experiment_design": {
+      "sample_size": "统计显著性要求的最小样本量",
+      "randomization": "用户分组和随机化策略",
+      "measurement": "关键指标的测量方法",
+      "stopping_rules": "实验停止的条件和规则"
+    },
+    "analytics_dashboard": {
+      "real_time_metrics": ["用户访问", "注册转化", "功能使用", "收入指标"],
+      "cohort_analysis": "用户群组分析和留存追踪",
+      "funnel_analysis": "转化漏斗分析和优化点识别"
+    },
+    "launch_plan": {
+      "phases": ["内测", "灰度发布", "公开发布", "规模化推广"],
+      "rollback_plan": "发布失败时的回滚策略",
+      "communication": "内外部沟通和PR策略"
+    }
+  },
+  "success_metrics": {
+    "north_star_metric": "核心业务指标(如月活用户数)",
+    "leading_indicators": ["注册率", "激活率", "使用频率"],
+    "lagging_indicators": ["收入增长", "用户留存", "市场份额"],
+    "threshold_settings": "成功、警告、失败的阈值设定"
+  }
+}

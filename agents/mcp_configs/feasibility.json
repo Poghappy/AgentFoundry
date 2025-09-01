@@ -1,0 +1,55 @@
+{
+  "agent_name": "Feasibility",
+  "description": "风险评估专家，负责技术、商业、合规可行性分析",
+  "mcp_tools": {
+    "sgai-mcp": {
+      "enabled": true,
+      "tools": [
+        "searchscraper",
+        "smartscraper",
+        "markdownify"
+      ],
+      "priority": "high",
+      "description": "技术调研和合规信息收集"
+    },
+    "GitHub": {
+      "enabled": true,
+      "tools": [
+        "search_repositories",
+        "search_code",
+        "get_file_contents"
+      ],
+      "priority": "medium",
+      "description": "技术栈调研和开源方案评估"
+    },
+    "TaskManager": {
+      "enabled": true,
+      "tools": [
+        "mark_task_done",
+        "open_task_details"
+      ],
+      "priority": "medium",
+      "description": "任务状态管理"
+    }
+  },
+  "core_responsibilities": [
+    "技术可行性评估",
+    "商业可行性分析",
+    "合规风险评估",
+    "输出红/黄/绿评级和缓解方案",
+    "制定两周原型计划"
+  ],
+  "input_types": ["产品概念", "技术要求", "商业模式"],
+  "output_types": ["可行性报告", "风险评级", "缓解方案", "原型计划"],
+  "evaluation_dimensions": [
+    "技术可行性",
+    "商业可行性",
+    "合规可行性",
+    "资源可行性"
+  ],
+  "risk_levels": {
+    "green": "低风险 - 可直接推进",
+    "yellow": "中风险 - 需要缓解措施",
+    "red": "高风险 - 需要重新评估或暂停"
+  }
+}

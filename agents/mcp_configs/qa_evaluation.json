@@ -1,0 +1,104 @@
+{
+  "agent_name": "QA_Evaluation",
+  "description": "质量保证专家，负责测试评估和安全检查",
+  "mcp_tools": {
+    "GitHub": {
+      "enabled": true,
+      "tools": [
+        "get_file_contents",
+        "create_or_update_file",
+        "push_files",
+        "search_code",
+        "create_pull_request",
+        "create_pull_request_review"
+      ],
+      "priority": "high",
+      "description": "测试代码管理和代码审查"
+    },
+    "sgai-mcp": {
+      "enabled": true,
+      "tools": [
+        "searchscraper",
+        "smartscraper"
+      ],
+      "priority": "medium",
+      "description": "测试最佳实践和安全标准调研"
+    },
+    "TaskManager": {
+      "enabled": true,
+      "tools": [
+        "mark_task_done",
+        "open_task_details"
+      ],
+      "priority": "medium",
+      "description": "测试任务管理"
+    }
+  },
+  "core_responsibilities": [
+    "设计黄金测试集(Golden Test Set)",
+    "执行红队安全测试",
+    "验证SLO指标达标",
+    "进行DPIA数据保护评估",
+    "制定成本上限监控",
+    "编写测试自动化脚本"
+  ],
+  "input_types": ["功能规格", "API文档", "安全要求"],
+  "output_types": ["测试报告", "安全评估", "质量指标", "改进建议"],
+  "testing_framework": {
+    "golden_test_set": {
+      "purpose": "核心功能的标准测试用例",
+      "coverage": ["正常流程", "边界条件", "异常场景", "性能基准"],
+      "maintenance": "随功能更新同步维护"
+    },
+    "red_team_testing": {
+      "security_aspects": [
+        "身份认证绕过",
+        "权限提升攻击",
+        "数据泄露风险",
+        "注入攻击测试",
+        "业务逻辑漏洞"
+      ],
+      "methodology": "模拟真实攻击场景"
+    },
+    "slo_validation": {
+      "metrics": [
+        "可用性监控",
+        "响应时间测试",
+        "错误率统计",
+        "吞吐量测试"
+      ],
+      "thresholds": "基于业务需求设定的阈值"
+    }
+  },
+  "quality_assurance": {
+    "test_automation": {
+      "unit_tests": "单元测试覆盖率≥80%",
+      "integration_tests": "API和服务集成测试",
+      "e2e_tests": "端到端用户场景测试",
+      "performance_tests": "负载和压力测试"
+    },
+    "code_quality": {
+      "static_analysis": "代码静态分析和规范检查",
+      "security_scan": "安全漏洞扫描",
+      "dependency_check": "依赖包安全检查",
+      "license_compliance": "开源许可证合规检查"
+    }
+  },
+  "deliverables": {
+    "test_suite": {
+      "golden_tests": "5-20个核心场景测试用例",
+      "red_team_scenarios": "安全攻击模拟测试",
+      "performance_benchmarks": "性能基准测试"
+    },
+    "quality_reports": {
+      "test_coverage": "测试覆盖率报告",
+      "security_assessment": "安全风险评估报告",
+      "performance_analysis": "性能分析和优化建议"
+    },
+    "monitoring_setup": {
+      "slo_dashboards": "SLO监控看板",
+      "alerting_rules": "异常告警规则",
+      "cost_monitoring": "成本监控和预算告警"
+    }
+  }
+}

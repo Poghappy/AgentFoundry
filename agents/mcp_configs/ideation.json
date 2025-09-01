@@ -1,0 +1,39 @@
+{
+  "agent_name": "Ideation",
+  "description": "创意孵化专家，负责机会识别和初步方案设计",
+  "mcp_tools": {
+    "sgai-mcp": {
+      "enabled": true,
+      "tools": [
+        "searchscraper",
+        "smartscraper",
+        "markdownify"
+      ],
+      "priority": "high",
+      "description": "市场调研和趋势分析工具"
+    },
+    "TaskManager": {
+      "enabled": true,
+      "tools": [
+        "mark_task_done",
+        "open_task_details"
+      ],
+      "priority": "medium",
+      "description": "任务状态管理"
+    }
+  },
+  "core_responsibilities": [
+    "基于市场洞察生成创新机会",
+    "提供保守/平衡/激进三种方案",
+    "设计1周微实验验证假设",
+    "使用RICE方法进行优先级排序"
+  ],
+  "input_types": ["领域方向", "目标用户", "约束条件"],
+  "output_types": ["机会清单", "三档方案", "微实验计划", "RICE评分"],
+  "research_focus": [
+    "市场痛点分析",
+    "用户需求挖掘",
+    "竞争态势评估",
+    "创新机会识别"
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "agent_name": "Research",
+  "description": "证据收集专家，负责市场调研和竞品分析",
+  "mcp_tools": {
+    "sgai-mcp": {
+      "enabled": true,
+      "tools": [
+        "searchscraper",
+        "smartscraper",
+        "markdownify",
+        "smartcrawler_initiate",
+        "smartcrawler_fetch_results"
+      ],
+      "priority": "high",
+      "description": "全面的网络搜索和数据抓取工具套件"
+    },
+    "TaskManager": {
+      "enabled": true,
+      "tools": [
+        "mark_task_done",
+        "open_task_details"
+      ],
+      "priority": "medium",
+      "description": "任务状态管理"
+    }
+  },
+  "core_responsibilities": [
+    "收集竞品分析、价格调研、用户信号",
+    "提供公开数据和行业报告",
+    "逐条提供引用来源",
+    "标注未知点并提供验证方案"
+  ],
+  "input_types": ["研究主题", "调研范围", "关键问题"],
+  "output_types": ["证据包", "引用清单", "未知点清单", "验证方案"],
+  "research_categories": [
+    "竞品分析",
+    "用户信号收集",
+    "公开数据挖掘",
+    "行业报告分析",
+    "价格策略调研"
+  ],
+  "quality_standards": [
+    "所有事实性结论必须有引用来源",
+    "区分已验证事实和假设推测",
+    "提供多个独立来源交叉验证",
+    "标注数据获取时间和可信度"
+  ]
+}
