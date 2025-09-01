@@ -1,0 +1,447 @@
+# AgentFoundry 成本预算政策配置
+# Cost Budget Policy Configuration
+
+# 版本信息
+version: "1.0.0"
+created_date: "2024-01-15"
+last_updated: "2024-01-15"
+author: "AgentFoundry Team"
+
+# 全局预算设置
+global_settings:
+  # 默认货币单位
+  currency: "USD"
+  # 预算监控频率 (分钟)
+  monitoring_interval: 5
+  # 预算报告频率
+  reporting_frequency: "daily"
+  # 预算年度
+  fiscal_year: 2024
+
+# 阶段预算配置
+stages:
+  # G1 研究阶段
+  research:
+    # 预算上限
+    usd_cap: 300
+    # 超限时的行动
+    action_on_breach: "downgrade_model"
+    # 警告阈值 (百分比)
+    warning_threshold: 80
+    # 预算分配
+    allocation:
+      web_search: 100      # 网络搜索费用
+      data_analysis: 50    # 数据分析费用
+      ai_models: 100       # AI模型调用费用
+      external_apis: 50    # 外部API费用
+    # 允许的服务
+    allowed_services:
+      - "web_search"
+      - "document_analysis"
+      - "competitive_research"
+      - "market_analysis"
+    # 成本优化策略
+    optimization:
+      - "use_cached_results"
+      - "batch_api_calls"
+      - "prefer_free_sources"
+
+  # G2 原型阶段
+  prototype:
+    usd_cap: 1000
+    action_on_breach: "stop_pipeline"
+    warning_threshold: 75
+    allocation:
+      development_tools: 200
+      cloud_services: 300
+      ai_models: 200
+      testing_tools: 150
+      external_apis: 150
+    allowed_services:
+      - "code_generation"
+      - "testing_automation"
+      - "deployment_services"
+      - "monitoring_tools"
+    optimization:
+      - "use_free_tier_services"
+      - "optimize_model_calls"
+      - "reuse_components"
+
+  # G3-G6 MVP阶段
+  mvp:
+    usd_cap: 1500
+    action_on_breach: "require_approval"
+    warning_threshold: 70
+    allocation:
+      infrastructure: 500
+      development: 400
+      testing: 200
+      marketing: 250
+      operations: 150
+    allowed_services:
+      - "production_deployment"
+      - "user_analytics"
+      - "customer_support"
+      - "marketing_automation"
+    optimization:
+      - "auto_scaling"
+      - "resource_pooling"
+      - "cost_monitoring"
+
+# 服务提供商成本配置
+service_providers:
+  # OpenAI API
+  openai:
+    # 模型定价 (每1K tokens)
+    models:
+      gpt-4:
+        input_cost: 0.03
+        output_cost: 0.06
+      gpt-4-turbo:
+        input_cost: 0.01
+        output_cost: 0.03
+      gpt-3.5-turbo:
+        input_cost: 0.001
+        output_cost: 0.002
+    # 每日限额
+    daily_limit: 100
+    # 降级策略
+    fallback_model: "gpt-3.5-turbo"
+
+  # Claude API
+  anthropic:
+    models:
+      claude-3-opus:
+        input_cost: 0.015
+        output_cost: 0.075
+      claude-3-sonnet:
+        input_cost: 0.003
+        output_cost: 0.015
+      claude-3-haiku:
+        input_cost: 0.00025
+        output_cost: 0.00125
+    daily_limit: 80
+    fallback_model: "claude-3-haiku"
+
+  # 云服务提供商
+  aws:
+    services:
+      ec2:
+        instance_types:
+          t3.micro: 0.0104  # 每小时
+          t3.small: 0.0208
+          t3.medium: 0.0416
+      s3:
+        storage: 0.023     # 每GB每月
+        requests: 0.0004   # 每1000请求
+      lambda:
+        requests: 0.0000002  # 每请求
+        duration: 0.0000166667  # 每GB-秒
+    monthly_limit: 200
+
+  # 第三方API服务
+  external_apis:
+    google_search:
+      cost_per_query: 0.005
+      daily_limit: 1000
+    github_api:
+      cost_per_request: 0.001
+      daily_limit: 5000
+    stripe_api:
+      cost_per_transaction: 0.029  # 2.9%
+      fixed_fee: 0.30
+
+# 成本监控规则
+monitoring:
+  # 实时监控
+  real_time:
+    enabled: true
+    check_interval: 60  # 秒
+    alert_threshold: 90  # 百分比
+
+  # 预测分析
+  forecasting:
+    enabled: true
+    prediction_window: 7  # 天
+    trend_analysis: true
+
+  # 异常检测
+  anomaly_detection:
+    enabled: true
+    sensitivity: "medium"
+    baseline_period: 30  # 天
+
+# 告警配置
+alerts:
+  # 邮件告警
+  email:
+    enabled: true
+    recipients:
+      - "admin@agentfoundry.com"
+      - "finance@agentfoundry.com"
+    # 告警级别
+    levels:
+      warning: 75   # 预算使用75%时警告
+      critical: 90  # 预算使用90%时严重告警
+      emergency: 100 # 预算耗尽时紧急告警
+
+  # Slack告警
+  slack:
+    enabled: true
+    webhook_url: "${SLACK_WEBHOOK_URL}"
+    channel: "#budget-alerts"
+
+  # 短信告警 (紧急情况)
+  sms:
+    enabled: false
+    provider: "twilio"
+    numbers:
+      - "+1234567890"
+
+# 自动化响应
+automation:
+  # 预算超限自动响应
+  budget_breach:
+    # 降级模型
+    downgrade_model:
+      enabled: true
+      fallback_sequence:
+      - from: "gpt-4"
+        to: "gpt-4-turbo"
+      - from: "gpt-4-turbo"
+        to: "gpt-3.5-turbo"
+      - from: "claude-3-opus"
+        to: "claude-3-sonnet"
+      - from: "claude-3-sonnet"
+        to: "claude-3-haiku"
+
+    # 停止管道
+    stop_pipeline:
+      enabled: true
+      grace_period: 300  # 秒
+      notification_delay: 60  # 秒
+
+    # 需要审批
+    require_approval:
+      enabled: true
+      approvers:
+        - "investor@agentfoundry.com"
+        - "cto@agentfoundry.com"
+      timeout: 3600  # 秒
+
+  # 成本优化
+  cost_optimization:
+    # 自动缓存
+    caching:
+      enabled: true
+      ttl: 3600  # 秒
+      max_size: "1GB"
+
+    # 批量处理
+    batching:
+      enabled: true
+      batch_size: 10
+      max_wait_time: 30  # 秒
+
+    # 资源回收
+    resource_cleanup:
+      enabled: true
+      idle_threshold: 1800  # 秒
+      cleanup_interval: 3600  # 秒
+
+# 报告配置
+reporting:
+  # 日报
+  daily:
+    enabled: true
+    time: "09:00"
+    timezone: "UTC"
+    recipients:
+      - "team@agentfoundry.com"
+    include:
+      - "cost_summary"
+      - "usage_trends"
+      - "budget_status"
+
+  # 周报
+  weekly:
+    enabled: true
+    day: "monday"
+    time: "09:00"
+    recipients:
+      - "management@agentfoundry.com"
+    include:
+      - "detailed_breakdown"
+      - "cost_analysis"
+      - "optimization_recommendations"
+
+  # 月报
+  monthly:
+    enabled: true
+    day: 1
+    time: "09:00"
+    recipients:
+      - "investor@agentfoundry.com"
+      - "board@agentfoundry.com"
+    include:
+      - "comprehensive_analysis"
+      - "roi_metrics"
+      - "budget_variance"
+      - "forecast_update"
+
+# 合规性配置
+compliance:
+  # 审计日志
+  audit_logging:
+    enabled: true
+    retention_period: 365  # 天
+    log_level: "detailed"
+
+  # 预算审批流程
+  approval_workflow:
+    enabled: true
+    # 需要审批的金额阈值
+    approval_thresholds:
+      level_1: 500   # 团队负责人审批
+      level_2: 1000  # 部门负责人审批
+      level_3: 2000  # 高级管理层审批
+      level_4: 5000  # 董事会审批
+
+  # 支出分类
+  expense_categories:
+    - "research_and_development"
+    - "infrastructure"
+    - "marketing"
+    - "operations"
+    - "compliance"
+    - "security"
+
+# 环境配置
+environments:
+  development:
+    budget_multiplier: 0.1  # 开发环境预算为生产环境的10%
+    monitoring_level: "basic"
+
+  staging:
+    budget_multiplier: 0.3  # 测试环境预算为生产环境的30%
+    monitoring_level: "standard"
+
+  production:
+    budget_multiplier: 1.0  # 生产环境100%预算
+    monitoring_level: "comprehensive"
+
+# 集成配置
+integrations:
+  # 财务系统集成
+  financial_system:
+    enabled: false
+    api_endpoint: "${FINANCE_API_ENDPOINT}"
+    sync_frequency: "hourly"
+
+  # 项目管理工具集成
+  project_management:
+    enabled: true
+    tool: "jira"
+    cost_tracking: true
+
+  # 云成本管理工具
+  cloud_cost_management:
+    aws_cost_explorer:
+      enabled: true
+      api_key: "${AWS_COST_EXPLORER_KEY}"
+    azure_cost_management:
+      enabled: false
+    gcp_billing:
+      enabled: false
+
+# 安全配置
+security:
+  # API密钥管理
+  api_keys:
+    encryption: "AES-256"
+    rotation_period: 90  # 天
+    access_logging: true
+
+  # 访问控制
+  access_control:
+    rbac_enabled: true
+    roles:
+      admin:
+        permissions:
+          - "view_all_budgets"
+          - "modify_budgets"
+          - "approve_expenses"
+      manager:
+        permissions:
+          - "view_team_budgets"
+          - "approve_small_expenses"
+      developer:
+        permissions:
+          - "view_own_usage"
+          - "request_budget_increase"
+
+# 备份和恢复
+backup:
+  enabled: true
+  frequency: "daily"
+  retention: 30  # 天
+  storage_location: "s3://agentfoundry-backups/budget-configs"
+
+# 版本控制
+version_control:
+  enabled: true
+  git_repository: "https://github.com/agentfoundry/budget-policies"
+  auto_commit: true
+  review_required: true
+
+# 性能配置
+performance:
+  # 缓存配置
+  cache:
+    enabled: true
+    provider: "redis"
+    ttl: 300  # 秒
+
+  # 数据库配置
+  database:
+    connection_pool_size: 10
+    query_timeout: 30  # 秒
+    slow_query_threshold: 5  # 秒
+
+# 测试配置
+testing:
+  # 预算模拟
+  budget_simulation:
+    enabled: true
+    scenarios:
+      - "normal_usage"
+      - "high_usage"
+      - "spike_usage"
+      - "cost_optimization"
+
+  # 负载测试
+  load_testing:
+    enabled: false
+    max_concurrent_requests: 100
+    test_duration: 300  # 秒
+
+# 文档和帮助
+documentation:
+  wiki_url: "https://wiki.agentfoundry.com/budget-policies"
+  support_email: "support@agentfoundry.com"
+  training_materials:
+    - "Budget Management Best Practices"
+    - "Cost Optimization Strategies"
+    - "Emergency Response Procedures"
+
+# 元数据
+metadata:
+  tags:
+    - "budget"
+    - "cost-control"
+    - "automation"
+    - "compliance"
+  owner: "Finance Team"
+  maintainer: "DevOps Team"
+  review_cycle: "quarterly"
+  next_review_date: "2024-04-15"

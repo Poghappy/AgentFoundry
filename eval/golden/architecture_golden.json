@@ -1,0 +1,302 @@
+{
+  "name": "架构设计评测黄金集",
+  "description": "用于评测系统架构设计质量的标准测试集",
+  "version": "1.0.0",
+  "created_date": "2025-01-20",
+  "test_cases": [
+    {
+      "id": "ARCH001",
+      "input": {
+        "system_type": "电商平台",
+        "requirements": [
+          "支持10万并发用户",
+          "99.9%可用性",
+          "全球部署",
+          "实时库存管理"
+        ],
+        "constraints": [
+          "预算限制",
+          "6个月上线",
+          "现有团队技能"
+        ]
+      },
+      "expected_output": {
+        "architecture_pattern": "微服务架构",
+        "key_components": [
+          "API网关",
+          "用户服务",
+          "商品服务",
+          "订单服务",
+          "支付服务",
+          "库存服务"
+        ],
+        "data_architecture": {
+          "primary_db": "PostgreSQL集群",
+          "cache": "Redis集群",
+          "search": "Elasticsearch",
+          "message_queue": "Apache Kafka"
+        },
+        "scalability_strategy": "水平扩展 + CDN + 数据库分片",
+        "security_measures": [
+          "OAuth 2.0认证",
+          "API限流",
+          "数据加密",
+          "WAF防护"
+        ],
+        "monitoring": "Prometheus + Grafana + ELK Stack"
+      },
+      "quality_metrics": {
+        "scalability": 0.9,
+        "maintainability": 0.85,
+        "security": 0.9,
+        "performance": 0.85
+      }
+    },
+    {
+      "id": "ARCH002",
+      "input": {
+        "system_type": "实时数据分析平台",
+        "requirements": [
+          "处理TB级数据",
+          "毫秒级响应",
+          "支持复杂查询",
+          "数据可视化"
+        ],
+        "constraints": [
+          "成本控制",
+          "数据安全",
+          "易于维护"
+        ]
+      },
+      "expected_output": {
+        "architecture_pattern": "Lambda架构",
+        "key_components": [
+          "数据摄取层",
+          "批处理层",
+          "流处理层",
+          "服务层",
+          "可视化层"
+        ],
+        "data_architecture": {
+          "streaming": "Apache Kafka + Apache Storm",
+          "batch_processing": "Apache Spark",
+          "storage": "HDFS + HBase",
+          "serving_db": "Cassandra"
+        },
+        "scalability_strategy": "分布式计算 + 数据分区 + 缓存策略",
+        "security_measures": [
+          "数据脱敏",
+          "访问控制",
+          "审计日志",
+          "加密传输"
+        ],
+        "monitoring": "自定义监控 + Zabbix + 业务指标看板"
+      },
+      "quality_metrics": {
+        "scalability": 0.95,
+        "maintainability": 0.8,
+        "security": 0.85,
+        "performance": 0.95
+      }
+    },
+    {
+      "id": "ARCH003",
+      "input": {
+        "system_type": "移动应用后端",
+        "requirements": [
+          "支持iOS和Android",
+          "离线功能",
+          "推送通知",
+          "社交功能"
+        ],
+        "constraints": [
+          "快速迭代",
+          "小团队",
+          "云原生"
+        ]
+      },
+      "expected_output": {
+        "architecture_pattern": "BFF + 微服务",
+        "key_components": [
+          "移动端BFF",
+          "用户服务",
+          "内容服务",
+          "通知服务",
+          "文件服务"
+        ],
+        "data_architecture": {
+          "primary_db": "MongoDB",
+          "cache": "Redis",
+          "file_storage": "AWS S3",
+          "search": "Algolia"
+        },
+        "scalability_strategy": "容器化 + 自动扩缩容 + CDN",
+        "security_measures": [
+          "JWT认证",
+          "API签名",
+          "设备指纹",
+          "内容审核"
+        ],
+        "monitoring": "AWS CloudWatch + 移动端崩溃监控"
+      },
+      "quality_metrics": {
+        "scalability": 0.8,
+        "maintainability": 0.9,
+        "security": 0.8,
+        "performance": 0.85
+      }
+    },
+    {
+      "id": "ARCH004",
+      "input": {
+        "system_type": "IoT数据收集平台",
+        "requirements": [
+          "百万设备接入",
+          "低功耗通信",
+          "边缘计算",
+          "设备管理"
+        ],
+        "constraints": [
+          "网络不稳定",
+          "设备资源有限",
+          "数据安全"
+        ]
+      },
+      "expected_output": {
+        "architecture_pattern": "边缘-云混合架构",
+        "key_components": [
+          "设备接入网关",
+          "边缘计算节点",
+          "数据聚合服务",
+          "设备管理平台",
+          "数据分析引擎"
+        ],
+        "data_architecture": {
+          "time_series_db": "InfluxDB",
+          "message_broker": "MQTT Broker",
+          "edge_storage": "SQLite",
+          "cloud_storage": "时序数据库集群"
+        },
+        "scalability_strategy": "分层架构 + 边缘缓存 + 数据压缩",
+        "security_measures": [
+          "设备证书认证",
+          "数据加密传输",
+          "固件安全更新",
+          "异常检测"
+        ],
+        "monitoring": "设备状态监控 + 网络质量监控 + 业务指标"
+      },
+      "quality_metrics": {
+        "scalability": 0.9,
+        "maintainability": 0.75,
+        "security": 0.9,
+        "performance": 0.8
+      }
+    },
+    {
+      "id": "ARCH005",
+      "input": {
+        "system_type": "企业内容管理系统",
+        "requirements": [
+          "文档版本控制",
+          "权限管理",
+          "全文搜索",
+          "工作流审批"
+        ],
+        "constraints": [
+          "企业内网部署",
+          "合规要求",
+          "现有AD集成"
+        ]
+      },
+      "expected_output": {
+        "architecture_pattern": "分层架构",
+        "key_components": [
+          "Web门户",
+          "业务逻辑层",
+          "工作流引擎",
+          "文档存储",
+          "搜索引擎"
+        ],
+        "data_architecture": {
+          "primary_db": "SQL Server",
+          "file_storage": "网络存储",
+          "search_engine": "Solr",
+          "cache": "本地缓存"
+        },
+        "scalability_strategy": "垂直扩展 + 读写分离 + 缓存优化",
+        "security_measures": [
+          "AD域认证",
+          "基于角色的访问控制",
+          "文档水印",
+          "操作审计"
+        ],
+        "monitoring": "Windows性能监控 + 应用日志 + 用户行为分析"
+      },
+      "quality_metrics": {
+        "scalability": 0.7,
+        "maintainability": 0.85,
+        "security": 0.95,
+        "performance": 0.75
+      }
+    }
+  ],
+  "evaluation_criteria": {
+    "scalability": {
+      "description": "系统扩展能力",
+      "weight": 0.25,
+      "metrics": [
+        "水平扩展支持",
+        "性能瓶颈识别",
+        "负载均衡策略"
+      ]
+    },
+    "maintainability": {
+      "description": "系统可维护性",
+      "weight": 0.25,
+      "metrics": [
+        "模块化程度",
+        "技术栈合理性",
+        "部署复杂度"
+      ]
+    },
+    "security": {
+      "description": "安全性设计",
+      "weight": 0.25,
+      "metrics": [
+        "认证授权机制",
+        "数据保护措施",
+        "安全监控"
+      ]
+    },
+    "performance": {
+      "description": "性能表现",
+      "weight": 0.25,
+      "metrics": [
+        "响应时间",
+        "吞吐量",
+        "资源利用率"
+      ]
+    }
+  },
+  "adr_requirements": {
+    "minimum_count": 2,
+    "required_sections": [
+      "Status",
+      "Context",
+      "Decision",
+      "Consequences"
+    ],
+    "quality_criteria": [
+      "决策背景清晰",
+      "备选方案对比",
+      "影响分析充分"
+    ]
+  },
+  "usage_instructions": {
+    "purpose": "评测AI生成架构设计的质量",
+    "scoring": "每个测试用例按四个维度评分，权重相等",
+    "threshold": "总分≥0.8视为通过，<0.75需要重新设计",
+    "frequency": "每次架构设计功能更新后运行"
+  }
+}

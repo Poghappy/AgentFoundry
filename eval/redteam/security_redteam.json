@@ -1,0 +1,305 @@
+{
+  "name": "安全红队测试集",
+  "description": "用于测试系统安全漏洞和滥用场景的红队测试集",
+  "version": "1.0.0",
+  "created_date": "2025-01-20",
+  "warning": "本测试集仅用于安全测试，禁止用于恶意攻击",
+  "test_categories": [
+    {
+      "category": "权限越权测试",
+      "description": "测试用户是否能够访问超出权限范围的资源",
+      "test_cases": [
+        {
+          "id": "AUTH001",
+          "scenario": "水平权限越权",
+          "description": "普通用户尝试访问其他用户的私有数据",
+          "attack_vector": "修改请求参数中的用户ID",
+          "test_steps": [
+            "以用户A身份登录系统",
+            "获取用户A的资源访问URL",
+            "修改URL中的用户ID为用户B的ID",
+            "尝试访问用户B的资源"
+          ],
+          "expected_result": "系统应拒绝访问并返回403错误",
+          "risk_level": "高",
+          "compliance_impact": "GDPR数据保护违规"
+        },
+        {
+          "id": "AUTH002",
+          "scenario": "垂直权限越权",
+          "description": "普通用户尝试执行管理员操作",
+          "attack_vector": "直接访问管理员功能URL",
+          "test_steps": [
+            "以普通用户身份登录",
+            "尝试访问管理员面板URL",
+            "尝试执行用户管理操作",
+            "尝试修改系统配置"
+          ],
+          "expected_result": "系统应拒绝访问并重定向到登录页",
+          "risk_level": "严重",
+          "compliance_impact": "系统完整性风险"
+        },
+        {
+          "id": "AUTH003",
+          "scenario": "会话劫持测试",
+          "description": "测试会话令牌的安全性",
+          "attack_vector": "会话固定和令牌预测",
+          "test_steps": [
+            "分析会话令牌的生成规律",
+            "尝试固定会话ID",
+            "测试会话超时机制",
+            "验证会话失效后的访问控制"
+          ],
+          "expected_result": "会话令牌应随机生成且定期失效",
+          "risk_level": "高",
+          "compliance_impact": "身份认证安全"
+        }
+      ]
+    },
+    {
+      "category": "数据泄露测试",
+      "description": "测试敏感数据是否可能被非授权访问",
+      "test_cases": [
+        {
+          "id": "DATA001",
+          "scenario": "SQL注入测试",
+          "description": "通过输入恶意SQL代码获取数据库信息",
+          "attack_vector": "在输入字段中注入SQL语句",
+          "test_steps": [
+            "在登录表单中输入SQL注入payload",
+            "在搜索框中尝试UNION查询",
+            "测试时间盲注和布尔盲注",
+            "尝试获取数据库结构信息"
+          ],
+          "expected_result": "系统应过滤恶意输入并记录攻击尝试",
+          "risk_level": "严重",
+          "compliance_impact": "数据库完整性和机密性"
+        },
+        {
+          "id": "DATA002",
+          "scenario": "敏感信息暴露",
+          "description": "检查系统是否暴露敏感配置信息",
+          "attack_vector": "访问常见的敏感文件路径",
+          "test_steps": [
+            "尝试访问/.env文件",
+            "检查/admin、/config等路径",
+            "查看HTTP响应头中的敏感信息",
+            "分析JavaScript文件中的API密钥"
+          ],
+          "expected_result": "敏感文件应不可访问，响应头不包含版本信息",
+          "risk_level": "中",
+          "compliance_impact": "信息安全基线"
+        },
+        {
+          "id": "DATA003",
+          "scenario": "个人信息泄露",
+          "description": "测试PII数据的保护措施",
+          "attack_vector": "通过API接口获取用户信息",
+          "test_steps": [
+            "枚举用户API接口",
+            "测试批量用户信息获取",
+            "检查日志中是否包含PII",
+            "验证数据脱敏措施"
+          ],
+          "expected_result": "PII数据应加密存储并脱敏显示",
+          "risk_level": "严重",
+          "compliance_impact": "GDPR、CCPA合规"
+        }
+      ]
+    },
+    {
+      "category": "业务逻辑漏洞",
+      "description": "测试业务流程中的逻辑缺陷",
+      "test_cases": [
+        {
+          "id": "BIZ001",
+          "scenario": "支付绕过测试",
+          "description": "尝试绕过支付流程获取付费服务",
+          "attack_vector": "修改支付金额或状态参数",
+          "test_steps": [
+            "拦截支付请求并修改金额为0",
+            "重放成功的支付响应",
+            "测试并发支付请求",
+            "尝试使用过期的优惠券"
+          ],
+          "expected_result": "系统应验证支付完整性并防止绕过",
+          "risk_level": "严重",
+          "compliance_impact": "财务损失风险"
+        },
+        {
+          "id": "BIZ002",
+          "scenario": "竞态条件测试",
+          "description": "利用并发请求造成数据不一致",
+          "attack_vector": "同时发送多个相同请求",
+          "test_steps": [
+            "同时提交多个转账请求",
+            "并发修改同一资源",
+            "测试库存扣减的原子性",
+            "验证幂等性控制"
+          ],
+          "expected_result": "系统应确保操作原子性和数据一致性",
+          "risk_level": "高",
+          "compliance_impact": "数据完整性"
+        },
+        {
+          "id": "BIZ003",
+          "scenario": "工作流绕过",
+          "description": "尝试跳过必要的审批流程",
+          "attack_vector": "直接调用后续步骤的API",
+          "test_steps": [
+            "分析工作流的各个步骤",
+            "尝试跳过审批直接执行",
+            "测试状态回滚攻击",
+            "验证步骤依赖关系"
+          ],
+          "expected_result": "系统应强制执行完整的工作流程",
+          "risk_level": "中",
+          "compliance_impact": "业务流程合规"
+        }
+      ]
+    },
+    {
+      "category": "输入验证测试",
+      "description": "测试系统对恶意输入的处理能力",
+      "test_cases": [
+        {
+          "id": "INPUT001",
+          "scenario": "XSS攻击测试",
+          "description": "注入恶意脚本代码",
+          "attack_vector": "在输入字段中注入JavaScript代码",
+          "test_steps": [
+            "在表单字段中输入<script>alert('XSS')</script>",
+            "测试反射型XSS和存储型XSS",
+            "尝试绕过XSS过滤器",
+            "测试DOM型XSS漏洞"
+          ],
+          "expected_result": "系统应过滤或转义恶意脚本",
+          "risk_level": "高",
+          "compliance_impact": "用户数据安全"
+        },
+        {
+          "id": "INPUT002",
+          "scenario": "文件上传漏洞",
+          "description": "上传恶意文件获取系统访问权限",
+          "attack_vector": "上传可执行文件或恶意脚本",
+          "test_steps": [
+            "尝试上传.php、.jsp等可执行文件",
+            "测试文件类型检测绕过",
+            "上传包含恶意代码的图片文件",
+            "验证文件大小和路径限制"
+          ],
+          "expected_result": "系统应严格验证文件类型和内容",
+          "risk_level": "严重",
+          "compliance_impact": "系统安全"
+        },
+        {
+          "id": "INPUT003",
+          "scenario": "命令注入测试",
+          "description": "通过输入执行系统命令",
+          "attack_vector": "在输入中注入系统命令",
+          "test_steps": [
+            "在文件名输入中添加;ls命令",
+            "测试管道符和重定向符号",
+            "尝试执行网络命令",
+            "验证输入过滤机制"
+          ],
+          "expected_result": "系统应禁止执行任何系统命令",
+          "risk_level": "严重",
+          "compliance_impact": "服务器安全"
+        }
+      ]
+    },
+    {
+      "category": "拒绝服务测试",
+      "description": "测试系统的可用性和稳定性",
+      "test_cases": [
+        {
+          "id": "DOS001",
+          "scenario": "资源耗尽攻击",
+          "description": "通过大量请求耗尽系统资源",
+          "attack_vector": "发送高频率的资源密集型请求",
+          "test_steps": [
+            "发送大量并发请求",
+            "上传超大文件",
+            "执行复杂的搜索查询",
+            "测试连接池耗尽"
+          ],
+          "expected_result": "系统应有限流和资源保护机制",
+          "risk_level": "中",
+          "compliance_impact": "服务可用性"
+        },
+        {
+          "id": "DOS002",
+          "scenario": "慢速攻击测试",
+          "description": "通过慢速连接占用服务器资源",
+          "attack_vector": "建立大量慢速连接",
+          "test_steps": [
+            "建立连接后缓慢发送数据",
+            "保持大量空闲连接",
+            "测试连接超时机制",
+            "验证并发连接限制"
+          ],
+          "expected_result": "系统应有连接超时和限制机制",
+          "risk_level": "中",
+          "compliance_impact": "服务稳定性"
+        }
+      ]
+    }
+  ],
+  "testing_methodology": {
+    "preparation": [
+      "获得明确的测试授权",
+      "准备隔离的测试环境",
+      "备份重要数据",
+      "通知相关团队"
+    ],
+    "execution": [
+      "按风险等级从低到高执行",
+      "详细记录测试过程和结果",
+      "发现漏洞立即停止并报告",
+      "避免对生产环境造成影响"
+    ],
+    "reporting": [
+      "详细描述漏洞复现步骤",
+      "评估风险等级和影响范围",
+      "提供修复建议",
+      "跟踪修复进度"
+    ]
+  },
+  "risk_levels": {
+    "严重": {
+      "description": "可能导致系统完全妥协或大量数据泄露",
+      "response_time": "24小时内修复",
+      "escalation": "立即通知安全团队和管理层"
+    },
+    "高": {
+      "description": "可能导致部分数据泄露或权限提升",
+      "response_time": "72小时内修复",
+      "escalation": "通知安全团队"
+    },
+    "中": {
+      "description": "可能影响系统可用性或造成信息泄露",
+      "response_time": "1周内修复",
+      "escalation": "纳入下次安全更新"
+    },
+    "低": {
+      "description": "轻微的安全问题，影响有限",
+      "response_time": "下次版本更新时修复",
+      "escalation": "记录到安全日志"
+    }
+  },
+  "compliance_frameworks": [
+    "OWASP Top 10",
+    "NIST Cybersecurity Framework",
+    "ISO 27001",
+    "GDPR",
+    "SOC 2"
+  ],
+  "usage_instructions": {
+    "purpose": "识别系统安全漏洞和业务逻辑缺陷",
+    "frequency": "每次重大功能更新后执行",
+    "environment": "仅在授权的测试环境中执行",
+    "documentation": "所有测试结果必须详细记录并安全存储"
+  },
+  "legal_disclaimer": "本测试集仅用于授权的安全测试，任何未经授权的使用都是违法行为。使用者需确保遵守相关法律法规和组织政策。"
+}

@@ -1,0 +1,173 @@
+{
+  "name": "用户故事评测黄金集",
+  "description": "用于评测用户故事生成质量的标准测试集",
+  "version": "1.0.0",
+  "created_date": "2025-01-20",
+  "test_cases": [
+    {
+      "id": "US001",
+      "input": {
+        "domain": "电商平台",
+        "feature": "用户注册",
+        "context": "新用户首次访问平台需要创建账户"
+      },
+      "expected_output": {
+        "story": "作为一个新用户，我希望能够快速注册账户，以便开始购物",
+        "given": "用户访问注册页面",
+        "when": "用户填写必要信息并提交",
+        "then": "系统创建账户并发送确认邮件",
+        "acceptance_criteria": [
+          "注册表单包含邮箱、密码、确认密码字段",
+          "密码强度验证",
+          "邮箱格式验证",
+          "注册成功后跳转到欢迎页面",
+          "发送邮箱验证链接"
+        ]
+      },
+      "quality_metrics": {
+        "clarity": 0.9,
+        "completeness": 0.85,
+        "testability": 0.9
+      }
+    },
+    {
+      "id": "US002",
+      "input": {
+        "domain": "项目管理工具",
+        "feature": "任务分配",
+        "context": "项目经理需要将任务分配给团队成员"
+      },
+      "expected_output": {
+        "story": "作为项目经理，我希望能够将任务分配给特定团队成员，以便明确责任和跟踪进度",
+        "given": "项目经理在任务管理界面",
+        "when": "选择任务并指定负责人",
+        "then": "任务被分配给指定成员并发送通知",
+        "acceptance_criteria": [
+          "可以从团队成员列表中选择负责人",
+          "可以设置任务截止日期",
+          "可以添加任务描述和优先级",
+          "被分配者收到邮件和系统通知",
+          "任务状态更新为'已分配'"
+        ]
+      },
+      "quality_metrics": {
+        "clarity": 0.95,
+        "completeness": 0.9,
+        "testability": 0.85
+      }
+    },
+    {
+      "id": "US003",
+      "input": {
+        "domain": "在线教育平台",
+        "feature": "课程搜索",
+        "context": "学生需要根据兴趣和需求查找合适的课程"
+      },
+      "expected_output": {
+        "story": "作为学生，我希望能够通过关键词和筛选条件搜索课程，以便找到符合我需求的学习内容",
+        "given": "学生在课程搜索页面",
+        "when": "输入搜索关键词并应用筛选条件",
+        "then": "系统显示匹配的课程列表",
+        "acceptance_criteria": [
+          "支持关键词模糊搜索",
+          "可按价格、评分、难度级别筛选",
+          "搜索结果按相关性排序",
+          "显示课程基本信息和评分",
+          "支持搜索历史记录"
+        ]
+      },
+      "quality_metrics": {
+        "clarity": 0.9,
+        "completeness": 0.9,
+        "testability": 0.95
+      }
+    },
+    {
+      "id": "US004",
+      "input": {
+        "domain": "医疗预约系统",
+        "feature": "预约取消",
+        "context": "患者因故无法按时就诊需要取消预约"
+      },
+      "expected_output": {
+        "story": "作为患者，我希望能够取消已预约的就诊时间，以便释放时间段给其他患者",
+        "given": "患者有有效的预约记录",
+        "when": "患者选择取消预约并确认",
+        "then": "预约被取消，时间段重新开放，相关方收到通知",
+        "acceptance_criteria": [
+          "只能取消未来24小时后的预约",
+          "取消后发送确认短信给患者",
+          "通知医生预约变更",
+          "时间段自动释放给其他患者",
+          "记录取消原因（可选）"
+        ]
+      },
+      "quality_metrics": {
+        "clarity": 0.85,
+        "completeness": 0.9,
+        "testability": 0.9
+      }
+    },
+    {
+      "id": "US005",
+      "input": {
+        "domain": "智能家居控制",
+        "feature": "设备自动化",
+        "context": "用户希望根据时间和条件自动控制家居设备"
+      },
+      "expected_output": {
+        "story": "作为智能家居用户，我希望能够设置自动化规则，以便设备能够根据预设条件自动运行",
+        "given": "用户在自动化设置界面",
+        "when": "创建包含触发条件和执行动作的规则",
+        "then": "系统保存规则并在条件满足时自动执行",
+        "acceptance_criteria": [
+          "支持时间、温度、光照等触发条件",
+          "可设置多个设备的联动动作",
+          "规则可以启用/禁用",
+          "执行历史记录可查询",
+          "异常情况下发送告警通知"
+        ]
+      },
+      "quality_metrics": {
+        "clarity": 0.8,
+        "completeness": 0.85,
+        "testability": 0.8
+      }
+    }
+  ],
+  "evaluation_criteria": {
+    "clarity": {
+      "description": "用户故事表述的清晰度",
+      "weight": 0.3,
+      "metrics": [
+        "角色定义明确",
+        "需求描述清楚",
+        "价值说明充分"
+      ]
+    },
+    "completeness": {
+      "description": "用户故事的完整性",
+      "weight": 0.4,
+      "metrics": [
+        "包含Given-When-Then结构",
+        "验收标准具体",
+        "边界条件考虑"
+      ]
+    },
+    "testability": {
+      "description": "用户故事的可测试性",
+      "weight": 0.3,
+      "metrics": [
+        "验收标准可验证",
+        "测试场景明确",
+        "成功标准量化"
+      ]
+    }
+  },
+  "usage_instructions": {
+    "purpose": "评测AI生成用户故事的质量",
+    "scoring": "每个测试用例按clarity、completeness、testability三个维度评分",
+    "threshold": "总分≥0.8视为通过，<0.7需要重新生成",
+    "frequency": "每次用户故事生成功能更新后运行"
+  }
+}

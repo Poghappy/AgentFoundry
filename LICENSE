@@ -1,0 +1,61 @@
+MIT License
+
+Copyright (c) 2024 AgentFoundry Contributors
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+---
+
+## Additional Terms and Conditions
+
+### Commercial Use
+
+This software is free for commercial use under the MIT License terms above. However, we encourage commercial users to:
+
+1. **Contribute back** improvements and bug fixes to the community
+2. **Consider sponsorship** to support ongoing development
+3. **Provide attribution** in your product documentation
+
+### Trademark Notice
+
+"AgentFoundry" and related trademarks are owned by the AgentFoundry project. Use of these trademarks is subject to our trademark policy available at: https://agentfoundry.dev/trademark
+
+### Patent Grant
+
+Subject to the terms and conditions of this license, each contributor hereby grants to you a perpetual, worldwide, non-exclusive, no-charge, royalty-free, irrevocable patent license to make, have made, use, offer to sell, sell, import, and otherwise transfer the work.
+
+### Third-Party Components
+
+This software may include third-party components with their own license terms. See the `THIRD_PARTY_LICENSES.md` file for details.
+
+### Export Control
+
+This software may be subject to export control laws and regulations. Users are responsible for compliance with applicable export control requirements.
+
+### Disclaimer
+
+The contributors to this project make no warranties about the suitability of this software for any purpose. It is provided "as is" without express or implied warranty.
+
+### Support
+
+This license does not grant any right to use the names, trademarks, service marks, or product names of the contributors, except as required for reasonable and customary use in describing the origin of the work.
+
+---
+
+**For questions about licensing, please contact**: [legal@agentfoundry.dev](mailto:legal@agentfoundry.dev)

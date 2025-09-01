@@ -1,0 +1,830 @@
+# AgentFoundry 数据映射与隐私政策配置
+# Data Mapping and Privacy Policy Configuration
+
+# 版本信息
+version: "1.0.0"
+created_date: "2024-01-15"
+last_updated: "2024-01-15"
+author: "AgentFoundry Team"
+
+# 数据分类定义
+data_classifications:
+  # 个人身份信息 (PII)
+  pii:
+    level: "high_sensitivity"
+    description: "可直接识别个人身份的信息"
+    examples:
+      - "姓名"
+      - "邮箱地址"
+      - "电话号码"
+      - "身份证号"
+      - "护照号码"
+    handling_requirements:
+      - "encryption_at_rest"
+      - "encryption_in_transit"
+      - "access_logging"
+      - "data_masking"
+      - "consent_required"
+    retention_policy:
+      default_retention: 30  # 天
+      max_retention: 365     # 天
+      deletion_method: "secure_wipe"
+
+  # 敏感个人信息 (SPI)
+  spi:
+    level: "very_high_sensitivity"
+    description: "特别敏感的个人信息"
+    examples:
+      - "财务信息"
+      - "健康记录"
+      - "生物特征"
+      - "政治观点"
+      - "宗教信仰"
+    handling_requirements:
+      - "end_to_end_encryption"
+      - "multi_factor_authentication"
+      - "audit_trail"
+      - "explicit_consent"
+      - "data_minimization"
+    retention_policy:
+      default_retention: 7   # 天
+      max_retention: 90      # 天
+      deletion_method: "cryptographic_erasure"
+
+  # 商业机密
+  confidential:
+    level: "high_sensitivity"
+    description: "商业机密和专有信息"
+    examples:
+      - "商业计划"
+      - "财务数据"
+      - "客户列表"
+      - "技术规格"
+      - "合同条款"
+    handling_requirements:
+      - "access_control"
+      - "encryption_at_rest"
+      - "watermarking"
+      - "download_restrictions"
+    retention_policy:
+      default_retention: 365  # 天
+      max_retention: 2555     # 7年
+      deletion_method: "secure_deletion"
+
+  # 内部使用
+  internal:
+    level: "medium_sensitivity"
+    description: "内部使用的非敏感信息"
+    examples:
+      - "员工目录"
+      - "内部文档"
+      - "会议记录"
+      - "项目状态"
+    handling_requirements:
+      - "access_control"
+      - "backup_encryption"
+    retention_policy:
+      default_retention: 1095  # 3年
+      max_retention: 3650      # 10年
+      deletion_method: "standard_deletion"
+
+  # 公开信息
+  public:
+    level: "low_sensitivity"
+    description: "可公开访问的信息"
+    examples:
+      - "公司信息"
+      - "产品文档"
+      - "新闻发布"
+      - "营销材料"
+    handling_requirements:
+      - "version_control"
+      - "content_approval"
+    retention_policy:
+      default_retention: 1825  # 5年
+      max_retention: -1        # 永久保留
+      deletion_method: "standard_deletion"
+
+# 数据集映射
+datasets:
+  # 用户反馈数据
+  user_feedback:
+    name: "用户反馈数据集"
+    description: "收集的用户反馈和建议"
+    classification: "pii"
+    pii: true
+    retention_days: 30
+    encryption:
+      at_rest: true
+      in_transit: true
+      method: "AES-256"
+    masking:
+      enabled: true
+      fields:
+        - "email"
+        - "phone"
+        - "name"
+      method: "hash_with_salt"
+    access_control:
+      roles:
+        - "product_manager"
+        - "ux_researcher"
+        - "data_analyst"
+      approval_required: true
+      audit_logging: true
+    data_sources:
+      - "feedback_forms"
+      - "user_interviews"
+      - "support_tickets"
+      - "app_reviews"
+    processing_purposes:
+      - "product_improvement"
+      - "user_experience_optimization"
+      - "feature_prioritization"
+    legal_basis: "legitimate_interest"
+    consent_required: true
+    data_subjects: "end_users"
+    geographic_scope:
+      - "EU"
+      - "US"
+      - "CA"
+    transfer_restrictions:
+      cross_border: false
+      approved_countries: ["US", "CA"]
+    backup_policy:
+      enabled: true
+      frequency: "daily"
+      retention: 7  # 天
+      encryption: true
+
+  # 系统日志
+  system_logs:
+    name: "系统操作日志"
+    description: "系统操作和访问日志"
+    classification: "internal"
+    pii: false
+    retention_days: 90
+    encryption:
+      at_rest: true
+      in_transit: true
+      method: "AES-256"
+    masking:
+      enabled: true
+      fields:
+        - "ip_address"
+        - "user_id"
+      method: "pseudonymization"
+    access_control:
+      roles:
+        - "system_administrator"
+        - "security_analyst"
+        - "devops_engineer"
+      approval_required: false
+      audit_logging: true
+    data_sources:
+      - "application_logs"
+      - "web_server_logs"
+      - "database_logs"
+      - "security_logs"
+    processing_purposes:
+      - "system_monitoring"
+      - "security_analysis"
+      - "performance_optimization"
+      - "troubleshooting"
+    legal_basis: "legitimate_interest"
+    consent_required: false
+    data_subjects: "system_users"
+    geographic_scope:
+      - "global"
+    transfer_restrictions:
+      cross_border: true
+      approved_countries: ["US", "EU", "CA"]
+    backup_policy:
+      enabled: true
+      frequency: "daily"
+      retention: 30  # 天
+      encryption: true
+
+  # 客户数据
+  customer_data:
+    name: "客户信息数据集"
+    description: "客户基本信息和交易记录"
+    classification: "pii"
+    pii: true
+    retention_days: 365
+    encryption:
+      at_rest: true
+      in_transit: true
+      method: "AES-256-GCM"
+    masking:
+      enabled: true
+      fields:
+        - "email"
+        - "phone"
+        - "address"
+        - "payment_info"
+      method: "tokenization"
+    access_control:
+      roles:
+        - "customer_service"
+        - "sales_manager"
+        - "billing_admin"
+      approval_required: true
+      audit_logging: true
+      mfa_required: true
+    data_sources:
+      - "registration_forms"
+      - "payment_systems"
+      - "crm_systems"
+      - "support_interactions"
+    processing_purposes:
+      - "service_delivery"
+      - "billing_and_payments"
+      - "customer_support"
+      - "legal_compliance"
+    legal_basis: "contract_performance"
+    consent_required: true
+    data_subjects: "customers"
+    geographic_scope:
+      - "EU"
+      - "US"
+    transfer_restrictions:
+      cross_border: false
+      approved_countries: ["US"]
+      adequacy_decisions: ["EU-US Privacy Shield"]
+    backup_policy:
+      enabled: true
+      frequency: "daily"
+      retention: 30  # 天
+      encryption: true
+      geographic_restrictions: true
+
+  # 员工数据
+  employee_data:
+    name: "员工信息数据集"
+    description: "员工个人信息和工作记录"
+    classification: "spi"
+    pii: true
+    retention_days: 2555  # 7年 (法律要求)
+    encryption:
+      at_rest: true
+      in_transit: true
+      method: "AES-256-GCM"
+    masking:
+      enabled: true
+      fields:
+        - "ssn"
+        - "bank_account"
+        - "salary"
+        - "performance_reviews"
+      method: "format_preserving_encryption"
+    access_control:
+      roles:
+        - "hr_manager"
+        - "payroll_admin"
+        - "legal_counsel"
+      approval_required: true
+      audit_logging: true
+      mfa_required: true
+      background_check_required: true
+    data_sources:
+      - "hr_systems"
+      - "payroll_systems"
+      - "time_tracking"
+      - "performance_management"
+    processing_purposes:
+      - "employment_management"
+      - "payroll_processing"
+      - "legal_compliance"
+      - "benefits_administration"
+    legal_basis: "employment_contract"
+    consent_required: false
+    data_subjects: "employees"
+    geographic_scope:
+      - "US"
+    transfer_restrictions:
+      cross_border: false
+      approved_countries: []
+    backup_policy:
+      enabled: true
+      frequency: "daily"
+      retention: 90  # 天
+      encryption: true
+      air_gapped: true
+
+  # 研究数据
+  research_data:
+    name: "市场研究数据集"
+    description: "市场调研和用户研究数据"
+    classification: "pii"
+    pii: true
+    retention_days: 180
+    encryption:
+      at_rest: true
+      in_transit: true
+      method: "AES-256"
+    masking:
+      enabled: true
+      fields:
+        - "participant_name"
+        - "contact_info"
+      method: "anonymization"
+    access_control:
+      roles:
+        - "research_analyst"
+        - "product_manager"
+        - "ux_researcher"
+      approval_required: true
+      audit_logging: true
+    data_sources:
+      - "surveys"
+      - "interviews"
+      - "focus_groups"
+      - "usability_tests"
+    processing_purposes:
+      - "market_research"
+      - "product_development"
+      - "user_experience_research"
+    legal_basis: "consent"
+    consent_required: true
+    data_subjects: "research_participants"
+    geographic_scope:
+      - "US"
+      - "EU"
+    transfer_restrictions:
+      cross_border: true
+      approved_countries: ["US", "CA"]
+    backup_policy:
+      enabled: true
+      frequency: "weekly"
+      retention: 14  # 天
+      encryption: true
+
+# 数据处理活动记录 (GDPR Article 30)
+processing_activities:
+  # 用户账户管理
+  user_account_management:
+    controller: "AgentFoundry Inc."
+    processor: "Internal Team"
+    contact_details:
+      dpo_email: "dpo@agentfoundry.com"
+      privacy_email: "privacy@agentfoundry.com"
+    purposes:
+      - "账户创建和管理"
+      - "身份验证和授权"
+      - "服务个性化"
+    categories_of_data_subjects:
+      - "注册用户"
+      - "试用用户"
+      - "企业客户"
+    categories_of_personal_data:
+      - "身份数据 (姓名、用户名)"
+      - "联系数据 (邮箱、电话)"
+      - "技术数据 (IP地址、设备信息)"
+      - "使用数据 (登录记录、功能使用)"
+    categories_of_recipients:
+      - "内部团队 (产品、技术、客服)"
+      - "云服务提供商 (AWS)"
+      - "分析服务提供商 (Google Analytics)"
+    transfers_to_third_countries:
+      enabled: true
+      countries: ["美国"]
+      safeguards: "标准合同条款 (SCCs)"
+      adequacy_decision: false
+    retention_periods:
+      active_users: "账户活跃期间"
+      inactive_users: "最后活动后2年"
+      deleted_accounts: "删除后30天 (备份)"
+    technical_and_organizational_measures:
+      - "数据加密 (传输和存储)"
+      - "访问控制和身份验证"
+      - "定期安全评估"
+      - "员工隐私培训"
+      - "数据最小化原则"
+
+  # 客户支持
+  customer_support:
+    controller: "AgentFoundry Inc."
+    processor: "Support Team"
+    contact_details:
+      dpo_email: "dpo@agentfoundry.com"
+      support_email: "support@agentfoundry.com"
+    purposes:
+      - "客户问题解决"
+      - "技术支持"
+      - "服务改进"
+    categories_of_data_subjects:
+      - "客户"
+      - "潜在客户"
+    categories_of_personal_data:
+      - "身份数据 (姓名、公司)"
+      - "联系数据 (邮箱、电话)"
+      - "支持数据 (问题描述、解决方案)"
+    categories_of_recipients:
+      - "客服团队"
+      - "技术支持团队"
+      - "第三方支持工具提供商"
+    transfers_to_third_countries:
+      enabled: false
+      countries: []
+      safeguards: ""
+      adequacy_decision: false
+    retention_periods:
+      support_tickets: "解决后1年"
+      communication_logs: "最后联系后2年"
+    technical_and_organizational_measures:
+      - "支持系统访问控制"
+      - "通信加密"
+      - "定期数据清理"
+      - "客服培训"
+
+# 隐私权利管理
+privacy_rights:
+  # 数据主体权利
+  data_subject_rights:
+    # 访问权 (GDPR Article 15)
+    right_of_access:
+      enabled: true
+      response_time: 30  # 天
+      verification_required: true
+      automated_response: false
+      contact_email: "privacy@agentfoundry.com"
+      request_form_url: "https://agentfoundry.com/privacy/access-request"
+
+    # 更正权 (GDPR Article 16)
+    right_to_rectification:
+      enabled: true
+      response_time: 30  # 天
+      verification_required: true
+      automated_correction: false
+      contact_email: "privacy@agentfoundry.com"
+
+    # 删除权 (GDPR Article 17)
+    right_to_erasure:
+      enabled: true
+      response_time: 30  # 天
+      verification_required: true
+      exceptions:
+        - "legal_obligation"
+        - "legitimate_interest"
+        - "contract_performance"
+      automated_deletion: true
+      contact_email: "privacy@agentfoundry.com"
+
+    # 限制处理权 (GDPR Article 18)
+    right_to_restrict_processing:
+      enabled: true
+      response_time: 30  # 天
+      verification_required: true
+      automated_restriction: false
+      contact_email: "privacy@agentfoundry.com"
+
+    # 数据可携权 (GDPR Article 20)
+    right_to_data_portability:
+      enabled: true
+      response_time: 30  # 天
+      verification_required: true
+      supported_formats:
+        - "JSON"
+        - "CSV"
+        - "XML"
+      automated_export: true
+      contact_email: "privacy@agentfoundry.com"
+
+    # 反对权 (GDPR Article 21)
+    right_to_object:
+      enabled: true
+      response_time: 30  # 天
+      verification_required: true
+      automated_opt_out: true
+      contact_email: "privacy@agentfoundry.com"
+
+  # 权利请求处理流程
+  request_processing:
+    # 身份验证
+    identity_verification:
+      required: true
+      methods:
+        - "email_verification"
+        - "account_login"
+        - "government_id" # 仅限敏感请求
+      verification_timeout: 7  # 天
+
+    # 请求跟踪
+    request_tracking:
+      enabled: true
+      ticket_system: "zendesk"
+      status_updates: true
+      automated_notifications: true
+
+    # 响应模板
+    response_templates:
+      access_response: "access_request_response.html"
+      deletion_confirmation: "deletion_confirmation.html"
+      rectification_confirmation: "rectification_confirmation.html"
+      restriction_confirmation: "restriction_confirmation.html"
+
+# 同意管理
+consent_management:
+  # 同意收集
+  consent_collection:
+    granular_consent: true
+    opt_in_required: true
+    clear_language: true
+    withdrawal_mechanism: true
+    consent_records:
+      retention_period: 1095  # 3年
+      proof_of_consent: true
+      timestamp_required: true
+      ip_address_logging: true
+
+  # 同意类型
+  consent_types:
+    marketing:
+      required: false
+      purpose: "营销通信和推广"
+      withdrawal_url: "https://agentfoundry.com/unsubscribe"
+    analytics:
+      required: false
+      purpose: "网站分析和改进"
+      withdrawal_method: "cookie_settings"
+    functional:
+      required: true
+      purpose: "基本服务功能"
+      withdrawal_method: "account_deletion"
+
+  # 同意状态跟踪
+  consent_tracking:
+    enabled: true
+    database_table: "user_consents"
+    audit_trail: true
+    version_control: true
+
+# 数据安全措施
+security_measures:
+  # 技术措施
+  technical_measures:
+    encryption:
+      at_rest:
+        enabled: true
+        algorithm: "AES-256-GCM"
+        key_management: "AWS KMS"
+        key_rotation: 90  # 天
+      in_transit:
+        enabled: true
+        protocol: "TLS 1.3"
+        certificate_management: "Let's Encrypt"
+        hsts_enabled: true
+      in_processing:
+        enabled: true
+        method: "homomorphic_encryption"
+        use_cases: ["analytics", "ml_training"]
+
+    access_control:
+      authentication:
+        mfa_required: true
+        password_policy:
+          min_length: 12
+          complexity_required: true
+          rotation_period: 90  # 天
+        session_management:
+          timeout: 30  # 分钟
+          concurrent_sessions: 3
+      authorization:
+        rbac_enabled: true
+        principle_of_least_privilege: true
+        regular_access_reviews: true
+        review_frequency: 90  # 天
+
+    data_loss_prevention:
+      enabled: true
+      scanning:
+        email_scanning: true
+        file_upload_scanning: true
+        database_monitoring: true
+      policies:
+        - "block_pii_transmission"
+        - "encrypt_sensitive_files"
+        - "monitor_data_exports"
+
+    monitoring_and_logging:
+      security_monitoring:
+        enabled: true
+        siem_integration: true
+        real_time_alerts: true
+      audit_logging:
+        enabled: true
+        log_retention: 365  # 天
+        log_integrity: true
+        centralized_logging: true
+
+  # 组织措施
+  organizational_measures:
+    privacy_governance:
+      dpo_appointed: true
+      privacy_team: true
+      privacy_policies: true
+      regular_training: true
+      training_frequency: 180  # 天
+
+    incident_response:
+      enabled: true
+      response_team: true
+      escalation_procedures: true
+      notification_procedures:
+        internal_notification: 4  # 小时
+        regulatory_notification: 72  # 小时
+        data_subject_notification: 72  # 小时
+      breach_register: true
+
+    vendor_management:
+      due_diligence: true
+      privacy_assessments: true
+      contractual_safeguards: true
+      regular_audits: true
+      audit_frequency: 365  # 天
+
+# 跨境数据传输
+international_transfers:
+  # 传输机制
+  transfer_mechanisms:
+    adequacy_decisions:
+      enabled: true
+      approved_countries:
+        - "Canada"
+        - "Japan"
+        - "South Korea"
+    standard_contractual_clauses:
+      enabled: true
+      version: "2021 SCCs"
+      supplementary_measures: true
+    binding_corporate_rules:
+      enabled: false
+    certification_schemes:
+      enabled: false
+
+  # 传输评估
+  transfer_assessment:
+    impact_assessment_required: true
+    legal_analysis: true
+    technical_safeguards: true
+    ongoing_monitoring: true
+
+  # 传输记录
+  transfer_records:
+    enabled: true
+    details_recorded:
+      - "recipient_details"
+      - "transfer_purpose"
+      - "data_categories"
+      - "safeguards_applied"
+      - "transfer_date"
+    retention_period: 1095  # 3年
+
+# 数据保护影响评估 (DPIA)
+dpia:
+  # DPIA触发条件
+  triggers:
+    - "large_scale_processing"
+    - "sensitive_data_processing"
+    - "systematic_monitoring"
+    - "automated_decision_making"
+    - "new_technology_use"
+
+  # DPIA流程
+  process:
+    preliminary_assessment: true
+    stakeholder_consultation: true
+    dpo_consultation: true
+    risk_assessment: true
+    mitigation_measures: true
+    monitoring_plan: true
+
+  # DPIA模板
+  template:
+    sections:
+      - "processing_description"
+      - "necessity_assessment"
+      - "risk_identification"
+      - "risk_analysis"
+      - "mitigation_measures"
+      - "residual_risks"
+      - "monitoring_plan"
+    approval_required: true
+    review_frequency: 365  # 天
+
+# 监控和审计
+monitoring:
+  # 合规监控
+  compliance_monitoring:
+    enabled: true
+    automated_checks: true
+    check_frequency: "daily"
+    compliance_dashboard: true
+    metrics:
+      - "consent_rates"
+      - "data_subject_requests"
+      - "breach_incidents"
+      - "retention_compliance"
+      - "access_violations"
+
+  # 性能监控
+  performance_monitoring:
+    enabled: true
+    response_time_tracking: true
+    availability_monitoring: true
+    capacity_planning: true
+
+  # 审计
+  auditing:
+    internal_audits:
+      enabled: true
+      frequency: 180  # 天
+      scope: "full_privacy_program"
+    external_audits:
+      enabled: true
+      frequency: 365  # 天
+      certifications:
+        - "ISO 27001"
+        - "SOC 2 Type II"
+    audit_trails:
+      enabled: true
+      immutable_logs: true
+      retention_period: 2555  # 7年
+
+# 培训和意识
+training:
+  # 员工培训
+  employee_training:
+    mandatory: true
+    frequency: 180  # 天
+    topics:
+      - "GDPR基础知识"
+      - "数据处理原则"
+      - "数据主体权利"
+      - "安全最佳实践"
+      - "事件响应程序"
+    completion_tracking: true
+    certification_required: true
+
+  # 专业培训
+  specialized_training:
+    dpo_training:
+      required: true
+      certification: "IAPP CIPP/E"
+      renewal_period: 730  # 2年
+    developer_training:
+      required: true
+      topics:
+        - "隐私设计"
+        - "安全编码"
+        - "数据最小化"
+      frequency: 180  # 天
+
+# 文档和记录
+documentation:
+  # 政策文档
+  policies:
+    privacy_policy:
+      url: "https://agentfoundry.com/privacy"
+      last_updated: "2024-01-15"
+      review_frequency: 180  # 天
+    cookie_policy:
+      url: "https://agentfoundry.com/cookies"
+      last_updated: "2024-01-15"
+      review_frequency: 180  # 天
+    data_retention_policy:
+      url: "https://agentfoundry.com/data-retention"
+      last_updated: "2024-01-15"
+      review_frequency: 365  # 天
+
+  # 记录保存
+  record_keeping:
+    processing_records: true
+    consent_records: true
+    breach_records: true
+    dpia_records: true
+    training_records: true
+    audit_records: true
+    retention_schedule: "privacy_record_retention_schedule.pdf"
+
+# 元数据
+metadata:
+  tags:
+    - "privacy"
+    - "gdpr"
+    - "data_protection"
+    - "compliance"
+  owner: "Privacy Team"
+  maintainer: "Data Protection Officer"
+  review_cycle: "quarterly"
+  next_review_date: "2024-04-15"
+  dependencies:
+    - "cost_budget.yaml"
+    - "approvals.yaml"
+    - "model_policy.md"
+  related_documents:
+    - "privacy_policy.md"
+    - "cookie_policy.md"
+    - "data_retention_policy.md"
+    - "incident_response_plan.md"

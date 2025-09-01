@@ -1,0 +1,400 @@
+{
+  "name": "PRD评测黄金集",
+  "description": "用于评测产品需求文档(PRD)质量的标准测试集",
+  "version": "1.0.0",
+  "created_date": "2025-01-20",
+  "test_cases": [
+    {
+      "id": "PRD001",
+      "input": {
+        "product_type": "在线教育平台",
+        "target_users": ["学生", "教师", "家长"],
+        "business_goals": [
+          "提高学习效率",
+          "增加用户粘性",
+          "扩大市场份额"
+        ],
+        "constraints": [
+          "3个月MVP上线",
+          "预算100万",
+          "团队10人"
+        ]
+      },
+      "expected_output": {
+        "user_stories": {
+          "count": 5,
+          "format": "As a [user], I want [goal] so that [benefit]",
+          "examples": [
+            "作为学生，我希望能够在线观看课程视频，以便随时随地学习",
+            "作为教师，我希望能够上传课程资料，以便学生下载学习",
+            "作为家长，我希望能够查看孩子的学习进度，以便了解学习情况"
+          ]
+        },
+        "gwt_criteria": {
+          "given": "明确的前置条件",
+          "when": "具体的用户操作",
+          "then": "可验证的结果"
+        },
+        "functional_requirements": [
+          "用户注册登录",
+          "课程视频播放",
+          "作业提交系统",
+          "学习进度跟踪",
+          "在线讨论区"
+        ],
+        "nfr": {
+          "performance": "页面加载时间<3秒，视频播放延迟<2秒",
+          "accessibility": "支持WCAG 2.1 AA标准，键盘导航",
+          "observability": "用户行为埋点，性能监控，错误追踪"
+        },
+        "failure_scenarios": [
+          "网络断开时显示离线提示",
+          "视频加载失败时提供重试选项",
+          "支付失败时保留购物车状态"
+        ],
+        "metrics_tracking": [
+          "日活跃用户数(DAU)",
+          "课程完成率",
+          "用户留存率",
+          "平均学习时长"
+        ],
+        "out_of_scope": [
+          "移动端APP开发",
+          "线下培训服务",
+          "第三方支付集成"
+        ]
+      },
+      "quality_metrics": {
+        "clarity": 0.9,
+        "completeness": 0.85,
+        "testability": 0.9,
+        "feasibility": 0.8
+      }
+    },
+    {
+      "id": "PRD002",
+      "input": {
+        "product_type": "智能家居控制系统",
+        "target_users": ["家庭用户", "租户", "物业管理"],
+        "business_goals": [
+          "提升居住体验",
+          "节能环保",
+          "安全防护"
+        ],
+        "constraints": [
+          "硬件成本限制",
+          "网络稳定性",
+          "隐私保护"
+        ]
+      },
+      "expected_output": {
+        "user_stories": {
+          "count": 6,
+          "format": "As a [user], I want [goal] so that [benefit]",
+          "examples": [
+            "作为家庭用户，我希望能够远程控制家电，以便回家前预先调节环境",
+            "作为租户，我希望能够设置临时访客权限，以便朋友能够进入",
+            "作为物业管理员，我希望能够监控公共区域设备状态，以便及时维护"
+          ]
+        },
+        "gwt_criteria": {
+          "given": "设备已连接且用户已认证",
+          "when": "用户发送控制指令",
+          "then": "设备响应并反馈状态"
+        },
+        "functional_requirements": [
+          "设备自动发现和配对",
+          "远程控制和监控",
+          "场景模式设置",
+          "定时任务管理",
+          "安全报警系统"
+        ],
+        "nfr": {
+          "performance": "控制响应时间<1秒，设备状态同步<5秒",
+          "accessibility": "语音控制，大字体显示，色盲友好",
+          "observability": "设备状态监控，能耗统计，故障预警"
+        },
+        "failure_scenarios": [
+          "网络断开时本地控制仍可用",
+          "设备离线时显示最后已知状态",
+          "控制失败时提供手动操作指引"
+        ],
+        "metrics_tracking": [
+          "设备在线率",
+          "控制成功率",
+          "能耗节省比例",
+          "用户满意度"
+        ],
+        "out_of_scope": [
+          "设备硬件制造",
+          "专业安装服务",
+          "保险理赔服务"
+        ]
+      },
+      "quality_metrics": {
+        "clarity": 0.85,
+        "completeness": 0.9,
+        "testability": 0.85,
+        "feasibility": 0.75
+      }
+    },
+    {
+      "id": "PRD003",
+      "input": {
+        "product_type": "企业协作工具",
+        "target_users": ["项目经理", "团队成员", "客户"],
+        "business_goals": [
+          "提高协作效率",
+          "透明化项目进度",
+          "降低沟通成本"
+        ],
+        "constraints": [
+          "企业安全要求",
+          "现有系统集成",
+          "多语言支持"
+        ]
+      },
+      "expected_output": {
+        "user_stories": {
+          "count": 7,
+          "format": "As a [user], I want [goal] so that [benefit]",
+          "examples": [
+            "作为项目经理，我希望能够创建和分配任务，以便团队明确工作职责",
+            "作为团队成员，我希望能够更新任务状态，以便项目经理了解进度",
+            "作为客户，我希望能够查看项目里程碑，以便了解交付时间"
+          ]
+        },
+        "gwt_criteria": {
+          "given": "用户已登录且有相应权限",
+          "when": "用户执行协作操作",
+          "then": "相关人员收到通知并更新状态"
+        },
+        "functional_requirements": [
+          "项目和任务管理",
+          "实时消息和通知",
+          "文件共享和版本控制",
+          "时间跟踪和报告",
+          "权限和角色管理"
+        ],
+        "nfr": {
+          "performance": "消息延迟<500ms，文件上传速度>1MB/s",
+          "accessibility": "屏幕阅读器支持，快捷键操作",
+          "observability": "用户活跃度监控，功能使用统计，性能指标"
+        },
+        "failure_scenarios": [
+          "网络中断时本地缓存数据",
+          "文件上传失败时自动重试",
+          "权限不足时显示申请流程"
+        ],
+        "metrics_tracking": [
+          "项目按时完成率",
+          "团队协作频次",
+          "用户活跃度",
+          "客户满意度评分"
+        ],
+        "out_of_scope": [
+          "财务管理功能",
+          "人力资源管理",
+          "客户关系管理"
+        ]
+      },
+      "quality_metrics": {
+        "clarity": 0.9,
+        "completeness": 0.9,
+        "testability": 0.85,
+        "feasibility": 0.85
+      }
+    },
+    {
+      "id": "PRD004",
+      "input": {
+        "product_type": "金融理财应用",
+        "target_users": ["个人投资者", "理财顾问", "机构客户"],
+        "business_goals": [
+          "增加用户投资收益",
+          "降低投资风险",
+          "提升服务质量"
+        ],
+        "constraints": [
+          "金融监管合规",
+          "数据安全要求",
+          "实时性要求"
+        ]
+      },
+      "expected_output": {
+        "user_stories": {
+          "count": 6,
+          "format": "As a [user], I want [goal] so that [benefit]",
+          "examples": [
+            "作为个人投资者，我希望能够查看实时行情，以便做出投资决策",
+            "作为理财顾问，我希望能够为客户制定投资组合，以便提供专业服务",
+            "作为机构客户，我希望能够批量执行交易，以便提高操作效率"
+          ]
+        },
+        "gwt_criteria": {
+          "given": "用户已完成身份认证和风险评估",
+          "when": "用户进行投资操作",
+          "then": "系统执行交易并记录完整审计日志"
+        },
+        "functional_requirements": [
+          "实时行情数据展示",
+          "投资组合管理",
+          "交易执行和确认",
+          "风险评估和预警",
+          "收益分析和报告"
+        ],
+        "nfr": {
+          "performance": "行情数据延迟<100ms，交易确认<1秒",
+          "accessibility": "高对比度模式，语音播报功能",
+          "observability": "交易监控，风险指标，合规审计日志"
+        },
+        "failure_scenarios": [
+          "行情数据异常时显示警告",
+          "交易失败时保留订单状态",
+          "系统维护时提前通知用户"
+        ],
+        "metrics_tracking": [
+          "交易成功率",
+          "用户投资收益率",
+          "风险控制有效性",
+          "客户满意度"
+        ],
+        "out_of_scope": [
+          "银行账户管理",
+          "保险产品销售",
+          "税务咨询服务"
+        ]
+      },
+      "quality_metrics": {
+        "clarity": 0.95,
+        "completeness": 0.9,
+        "testability": 0.9,
+        "feasibility": 0.8
+      }
+    },
+    {
+      "id": "PRD005",
+      "input": {
+        "product_type": "医疗预约平台",
+        "target_users": ["患者", "医生", "医院管理员"],
+        "business_goals": [
+          "提高就医效率",
+          "优化资源配置",
+          "改善患者体验"
+        ],
+        "constraints": [
+          "医疗数据隐私",
+          "监管合规要求",
+          "系统稳定性"
+        ]
+      },
+      "expected_output": {
+        "user_stories": {
+          "count": 6,
+          "format": "As a [user], I want [goal] so that [benefit]",
+          "examples": [
+            "作为患者，我希望能够在线预约医生，以便避免排队等候",
+            "作为医生，我希望能够查看患者病历，以便提供更好的诊疗服务",
+            "作为医院管理员，我希望能够统计预约数据，以便优化资源配置"
+          ]
+        },
+        "gwt_criteria": {
+          "given": "用户已完成实名认证",
+          "when": "用户进行医疗相关操作",
+          "then": "系统确保数据安全并符合医疗规范"
+        },
+        "functional_requirements": [
+          "在线预约挂号",
+          "电子病历管理",
+          "支付和退款",
+          "医患沟通平台",
+          "健康档案管理"
+        ],
+        "nfr": {
+          "performance": "预约响应时间<2秒，系统可用性99.9%",
+          "accessibility": "老年人友好界面，语音辅助功能",
+          "observability": "预约成功率监控，用户行为分析，系统性能监控"
+        },
+        "failure_scenarios": [
+          "预约冲突时提供备选时间",
+          "支付失败时保留预约状态",
+          "系统故障时提供紧急联系方式"
+        ],
+        "metrics_tracking": [
+          "预约成功率",
+          "患者满意度",
+          "医生工作效率",
+          "系统使用率"
+        ],
+        "out_of_scope": [
+          "在线诊疗服务",
+          "药品配送",
+          "医疗保险理赔"
+        ]
+      },
+      "quality_metrics": {
+        "clarity": 0.9,
+        "completeness": 0.85,
+        "testability": 0.85,
+        "feasibility": 0.8
+      }
+    }
+  ],
+  "evaluation_criteria": {
+    "clarity": {
+      "description": "需求表达清晰度",
+      "weight": 0.25,
+      "metrics": [
+        "用户故事表达清晰",
+        "验收标准明确",
+        "术语使用一致"
+      ]
+    },
+    "completeness": {
+      "description": "需求完整性",
+      "weight": 0.3,
+      "metrics": [
+        "功能需求覆盖完整",
+        "非功能需求明确",
+        "边界条件考虑充分"
+      ]
+    },
+    "testability": {
+      "description": "可测试性",
+      "weight": 0.25,
+      "metrics": [
+        "验收标准可验证",
+        "指标可量化",
+        "测试场景明确"
+      ]
+    },
+    "feasibility": {
+      "description": "可实现性",
+      "weight": 0.2,
+      "metrics": [
+        "技术方案可行",
+        "资源需求合理",
+        "时间安排现实"
+      ]
+    }
+  },
+  "prd_structure_requirements": {
+    "max_pages": 1,
+    "required_sections": [
+      "产品概述",
+      "用户故事",
+      "功能需求",
+      "非功能需求",
+      "验收标准",
+      "范围外内容"
+    ],
+    "user_story_format": "Given-When-Then结构",
+    "metrics_requirement": "每个功能都要有对应的埋点和指标"
+  },
+  "usage_instructions": {
+    "purpose": "评测AI生成PRD的质量",
+    "scoring": "按四个维度加权评分",
+    "threshold": "总分≥0.85视为优秀，≥0.75视为合格，<0.7需要重写",
+    "frequency": "每次PRD生成功能更新后运行"
+  }
+}

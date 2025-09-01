@@ -1,0 +1,621 @@
+# AgentFoundry 审批政策配置
+# Approval Policy Configuration
+
+# 版本信息
+version: "1.0.0"
+created_date: "2024-01-15"
+last_updated: "2024-01-15"
+author: "AgentFoundry Team"
+
+# 全局审批设置
+global_settings:
+  # 默认审批超时时间 (小时)
+  default_timeout: 24
+  # 审批通知方式
+  notification_methods:
+    - "email"
+    - "slack"
+    - "dashboard"
+  # 审批历史保留期 (天)
+  history_retention: 365
+  # 自动升级时间 (小时)
+  auto_escalation_time: 48
+
+# 关卡审批配置
+gates:
+  # G0 立项关卡 - 必须投资人签字
+  G0:
+    required: true
+    approver_role: "investor"
+    approver_level: "executive"
+    timeout_hours: 48
+    auto_escalation: true
+    escalation_chain:
+      - "investor"
+      - "board_member"
+      - "ceo"
+    approval_criteria:
+      - "problem_definition_clear"
+      - "north_star_metric_defined"
+      - "rice_score_calculated"
+      - "budget_framework_approved"
+      - "scope_boundaries_set"
+    required_documents:
+      - "project_charter"
+      - "rice_assessment"
+      - "risk_register"
+      - "budget_proposal"
+    notification_template: "g0_approval_request"
+    approval_weight: 100  # 需要100%同意
+
+  # G1 研究关卡 - 自动通过，但需要质量检查
+  G1:
+    required: false
+    approver_role: "research_lead"
+    approver_level: "manager"
+    timeout_hours: 24
+    auto_approval: true
+    auto_approval_conditions:
+      - "evidence_citations_complete"
+      - "unknown_items_documented"
+      - "research_quality_score >= 80"
+    quality_gates:
+      - "competitive_analysis_complete"
+      - "user_research_validated"
+      - "technical_feasibility_assessed"
+      - "market_size_estimated"
+    fallback_approval:
+      enabled: true
+      fallback_role: "product_manager"
+    notification_template: "g1_quality_check"
+
+  # G2 可行性关卡 - 必须投资人签字
+  G2:
+    required: true
+    approver_role: "investor"
+    approver_level: "executive"
+    timeout_hours: 72
+    auto_escalation: true
+    escalation_chain:
+      - "investor"
+      - "technical_advisor"
+      - "board_member"
+    approval_criteria:
+      - "technical_feasibility_green"
+      - "business_feasibility_confirmed"
+      - "compliance_risks_mitigated"
+      - "cost_estimates_reasonable"
+      - "prototype_plan_viable"
+    required_documents:
+      - "feasibility_report"
+      - "risk_assessment"
+      - "prototype_plan"
+      - "dpia_assessment"
+      - "cost_analysis"
+    risk_thresholds:
+      technical_risk: "medium"  # 最高接受中等技术风险
+      business_risk: "low"      # 最高接受低商业风险
+      compliance_risk: "low"    # 最高接受低合规风险
+    notification_template: "g2_approval_request"
+    approval_weight: 100
+
+  # G3 PRD关卡 - 必须投资人签字
+  G3:
+    required: true
+    approver_role: "investor"
+    approver_level: "executive"
+    timeout_hours: 48
+    auto_escalation: true
+    escalation_chain:
+      - "investor"
+      - "product_advisor"
+      - "cto"
+    approval_criteria:
+      - "user_stories_complete"
+      - "prd_comprehensive"
+      - "scope_boundaries_clear"
+      - "nfr_requirements_defined"
+      - "analytics_plan_ready"
+    required_documents:
+      - "user_stories_collection"
+      - "product_requirements_document"
+      - "interface_specifications"
+      - "analytics_plan"
+      - "failure_scenarios"
+    quality_metrics:
+      user_story_coverage: 100  # 必须100%覆盖核心功能
+      acceptance_criteria_completeness: 95
+      nfr_definition_score: 90
+    notification_template: "g3_approval_request"
+    approval_weight: 100
+
+  # G4 架构关卡 - 技术审批
+  G4:
+    required: true
+    approver_role: "technical_lead"
+    approver_level: "senior"
+    timeout_hours: 48
+    auto_escalation: false
+    approval_criteria:
+      - "architecture_design_sound"
+      - "adr_decisions_documented"
+      - "slo_targets_realistic"
+      - "integration_strategy_viable"
+      - "security_considerations_addressed"
+    required_documents:
+      - "system_architecture"
+      - "architecture_decision_records"
+      - "slo_definitions"
+      - "integration_matrix"
+      - "security_architecture"
+    technical_review:
+      enabled: true
+      reviewers:
+        - "senior_architect"
+        - "security_engineer"
+        - "devops_lead"
+      consensus_required: true
+    notification_template: "g4_technical_review"
+    approval_weight: 75  # 需要75%同意
+
+  # G5 设计开发关卡 - 质量关卡
+  G5:
+    required: true
+    approver_role: "qa_lead"
+    approver_level: "senior"
+    timeout_hours: 24
+    auto_approval: true
+    auto_approval_conditions:
+      - "all_tests_passing"
+      - "code_coverage >= 80"
+      - "security_scan_clean"
+      - "performance_benchmarks_met"
+      - "accessibility_compliance"
+    quality_gates:
+      - "design_specifications_complete"
+      - "ci_cd_pipeline_functional"
+      - "feature_flags_implemented"
+      - "rollback_procedures_tested"
+      - "monitoring_alerts_configured"
+    manual_review_triggers:
+      - "security_vulnerabilities_found"
+      - "performance_degradation_detected"
+      - "accessibility_issues_identified"
+    notification_template: "g5_quality_gate"
+
+  # G6 MVP关卡 - 必须投资人签字
+  G6:
+    required: true
+    approver_role: "investor"
+    approver_level: "executive"
+    timeout_hours: 72
+    auto_escalation: true
+    escalation_chain:
+      - "investor"
+      - "growth_advisor"
+      - "board_member"
+    approval_criteria:
+      - "mvp_functionality_complete"
+      - "experiment_design_validated"
+      - "analytics_dashboard_ready"
+      - "growth_strategy_approved"
+      - "launch_plan_executable"
+    required_documents:
+      - "mvp_release_plan"
+      - "experiment_design"
+      - "analytics_dashboard"
+      - "growth_strategy"
+      - "launch_checklist"
+    business_metrics:
+      user_acquisition_target: 1000
+      activation_rate_target: 0.25
+      retention_rate_target: 0.60
+    go_no_go_criteria:
+      - "technical_readiness_score >= 90"
+      - "market_readiness_score >= 80"
+      - "team_readiness_score >= 85"
+    notification_template: "g6_approval_request"
+    approval_weight: 100
+
+# 审批角色定义
+approver_roles:
+  # 投资人
+  investor:
+    level: "executive"
+    permissions:
+      - "approve_all_gates"
+      - "override_decisions"
+      - "access_financial_data"
+      - "modify_budgets"
+    contact_methods:
+      email: "investor@agentfoundry.com"
+      slack: "@investor"
+      phone: "+1-555-0001"
+    backup_approvers:
+      - "board_member"
+      - "ceo"
+    approval_authority:
+      budget_limit: 10000  # USD
+      risk_tolerance: "medium"
+
+  # 技术负责人
+  technical_lead:
+    level: "senior"
+    permissions:
+      - "approve_technical_gates"
+      - "review_architecture"
+      - "access_technical_docs"
+    contact_methods:
+      email: "tech.lead@agentfoundry.com"
+      slack: "@tech-lead"
+    backup_approvers:
+      - "senior_architect"
+      - "cto"
+    approval_authority:
+      budget_limit: 5000
+      risk_tolerance: "low"
+
+  # 产品经理
+  product_manager:
+    level: "manager"
+    permissions:
+      - "approve_product_gates"
+      - "review_requirements"
+      - "access_user_research"
+    contact_methods:
+      email: "pm@agentfoundry.com"
+      slack: "@product-manager"
+    backup_approvers:
+      - "product_director"
+      - "cpo"
+    approval_authority:
+      budget_limit: 2000
+      risk_tolerance: "medium"
+
+  # 质量负责人
+  qa_lead:
+    level: "senior"
+    permissions:
+      - "approve_quality_gates"
+      - "review_test_results"
+      - "access_quality_metrics"
+    contact_methods:
+      email: "qa.lead@agentfoundry.com"
+      slack: "@qa-lead"
+    backup_approvers:
+      - "senior_qa"
+      - "engineering_manager"
+    approval_authority:
+      budget_limit: 1000
+      risk_tolerance: "very_low"
+
+  # 研究负责人
+  research_lead:
+    level: "manager"
+    permissions:
+      - "approve_research_gates"
+      - "review_research_quality"
+      - "access_research_data"
+    contact_methods:
+      email: "research.lead@agentfoundry.com"
+      slack: "@research-lead"
+    backup_approvers:
+      - "senior_researcher"
+      - "head_of_research"
+    approval_authority:
+      budget_limit: 500
+      risk_tolerance: "medium"
+
+# 审批流程配置
+workflows:
+  # 标准审批流程
+  standard:
+    steps:
+      1:
+        name: "initial_review"
+        approver: "primary"
+        timeout: 24
+        auto_approve_conditions: []
+      2:
+        name: "stakeholder_review"
+        approver: "stakeholder"
+        timeout: 48
+        parallel_approval: true
+      3:
+        name: "final_approval"
+        approver: "executive"
+        timeout: 72
+        required: true
+
+  # 快速审批流程 (低风险项目)
+  fast_track:
+    steps:
+      1:
+        name: "automated_check"
+        approver: "system"
+        timeout: 1
+        auto_approve_conditions:
+          - "risk_score < 30"
+          - "budget < 1000"
+          - "no_compliance_issues"
+      2:
+        name: "manager_approval"
+        approver: "manager"
+        timeout: 12
+        required: true
+
+  # 紧急审批流程
+  emergency:
+    steps:
+      1:
+        name: "emergency_review"
+        approver: "on_call_executive"
+        timeout: 4
+        notification_urgency: "high"
+        required: true
+    triggers:
+      - "security_incident"
+      - "production_outage"
+      - "regulatory_deadline"
+
+# 通知配置
+notifications:
+  # 邮件通知模板
+  email_templates:
+    g0_approval_request:
+      subject: "[AgentFoundry] G0立项审批请求 - {project_name}"
+      template: "g0_approval_email.html"
+      priority: "high"
+    g2_approval_request:
+      subject: "[AgentFoundry] G2可行性审批请求 - {project_name}"
+      template: "g2_approval_email.html"
+      priority: "high"
+    g3_approval_request:
+      subject: "[AgentFoundry] G3产品需求审批请求 - {project_name}"
+      template: "g3_approval_email.html"
+      priority: "medium"
+    g6_approval_request:
+      subject: "[AgentFoundry] G6 MVP发布审批请求 - {project_name}"
+      template: "g6_approval_email.html"
+      priority: "high"
+
+  # Slack通知配置
+  slack:
+    webhook_url: "${SLACK_WEBHOOK_URL}"
+    channels:
+      approvals: "#approvals"
+      executives: "#executive-decisions"
+      technical: "#tech-reviews"
+    message_format: "structured"
+    include_attachments: true
+
+  # 短信通知 (紧急情况)
+  sms:
+    provider: "twilio"
+    emergency_only: true
+    numbers:
+      investor: "+1-555-0001"
+      cto: "+1-555-0002"
+      ceo: "+1-555-0003"
+
+# 审批决策记录
+decision_tracking:
+  # 决策历史
+  history:
+    enabled: true
+    retention_period: 1095  # 3年
+    include_rationale: true
+    include_dissenting_opinions: true
+
+  # 决策分析
+  analytics:
+    enabled: true
+    metrics:
+      - "approval_time_avg"
+      - "approval_rate_by_gate"
+      - "escalation_frequency"
+      - "decision_reversal_rate"
+    reporting_frequency: "monthly"
+
+  # 决策质量评估
+  quality_assessment:
+    enabled: true
+    post_decision_review: true
+    review_period: 90  # 天
+    success_metrics:
+      - "project_success_rate"
+      - "budget_variance"
+      - "timeline_adherence"
+
+# 风险管理
+risk_management:
+  # 风险评估
+  assessment:
+    enabled: true
+    factors:
+      - "technical_complexity"
+      - "market_uncertainty"
+      - "regulatory_compliance"
+      - "resource_availability"
+      - "timeline_pressure"
+    scoring_method: "weighted_average"
+
+  # 风险缓解
+  mitigation:
+    auto_mitigation:
+      enabled: true
+      strategies:
+        - "additional_review"
+        - "expert_consultation"
+        - "prototype_validation"
+        - "phased_rollout"
+    manual_intervention:
+      triggers:
+        - "high_risk_score"
+        - "multiple_red_flags"
+        - "stakeholder_concerns"
+
+# 合规性配置
+compliance:
+  # 审计要求
+  audit:
+    enabled: true
+    trail_retention: 2555  # 7年
+    immutable_records: true
+    digital_signatures: true
+
+  # 监管要求
+  regulatory:
+    gdpr_compliance: true
+    sox_compliance: false
+    iso27001_compliance: true
+    custom_requirements:
+      - "data_protection_review"
+      - "security_assessment"
+      - "privacy_impact_analysis"
+
+  # 内部政策
+  internal_policies:
+    code_of_conduct: true
+    conflict_of_interest: true
+    insider_trading: false
+    anti_corruption: true
+
+# 性能和可扩展性
+performance:
+  # 系统性能
+  system:
+    max_concurrent_approvals: 100
+    response_time_target: 2  # 秒
+    availability_target: 99.9  # 百分比
+
+  # 数据库优化
+  database:
+    connection_pool_size: 20
+    query_timeout: 30  # 秒
+    index_optimization: true
+
+  # 缓存配置
+  caching:
+    enabled: true
+    provider: "redis"
+    ttl: 300  # 秒
+    cache_approval_status: true
+
+# 集成配置
+integrations:
+  # 项目管理工具
+  project_management:
+    jira:
+      enabled: true
+      webhook_url: "${JIRA_WEBHOOK_URL}"
+      create_tickets: true
+      update_status: true
+    asana:
+      enabled: false
+
+  # 身份认证
+  authentication:
+    sso:
+      enabled: true
+      provider: "okta"
+      auto_provision: true
+    mfa:
+      enabled: true
+      required_for_executives: true
+
+  # 文档系统
+  documentation:
+    confluence:
+      enabled: true
+      auto_update: true
+      template_sync: true
+    notion:
+      enabled: false
+
+# 监控和告警
+monitoring:
+  # 系统监控
+  system_health:
+    enabled: true
+    check_interval: 60  # 秒
+    alert_thresholds:
+      response_time: 5  # 秒
+      error_rate: 1  # 百分比
+      queue_depth: 50
+
+  # 业务监控
+  business_metrics:
+    enabled: true
+    metrics:
+      - "pending_approvals_count"
+      - "overdue_approvals_count"
+      - "approval_velocity"
+      - "escalation_rate"
+    dashboard_url: "${MONITORING_DASHBOARD_URL}"
+
+  # 告警配置
+  alerts:
+    email:
+      enabled: true
+      recipients:
+        - "ops@agentfoundry.com"
+    slack:
+      enabled: true
+      channel: "#ops-alerts"
+    pagerduty:
+      enabled: false
+
+# 测试和验证
+testing:
+  # 审批流程测试
+  workflow_testing:
+    enabled: true
+    test_scenarios:
+      - "normal_approval_flow"
+      - "escalation_scenario"
+      - "timeout_handling"
+      - "parallel_approval"
+    automated_testing: true
+
+  # 负载测试
+  load_testing:
+    enabled: false
+    max_concurrent_users: 50
+    test_duration: 300  # 秒
+
+# 备份和恢复
+backup:
+  enabled: true
+  frequency: "daily"
+  retention: 90  # 天
+  storage_location: "s3://agentfoundry-backups/approval-configs"
+  encryption: true
+
+# 文档和培训
+documentation:
+  user_guides:
+    - "Approval Process Overview"
+    - "Approver Responsibilities"
+    - "Emergency Procedures"
+  training_materials:
+    - "New Approver Onboarding"
+    - "Decision Making Best Practices"
+    - "Risk Assessment Training"
+  wiki_url: "https://wiki.agentfoundry.com/approvals"
+
+# 元数据
+metadata:
+  tags:
+    - "approval"
+    - "governance"
+    - "compliance"
+    - "workflow"
+  owner: "Governance Team"
+  maintainer: "DevOps Team"
+  review_cycle: "quarterly"
+  next_review_date: "2024-04-15"
+  dependencies:
+    - "cost_budget.yaml"
+    - "data_map.yaml"
+    - "model_policy.md"

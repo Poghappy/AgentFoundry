@@ -1,0 +1,384 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "AgentFoundry Telemetry Schema",
+  "description": "遥测数据结构定义，用于监控和分析系统性能",
+  "version": "1.0.0",
+  "created_date": "2025-01-27",
+  "updated_date": "2025-01-27",
+  
+  "event_categories": {
+    "business_metrics": {
+      "description": "业务指标事件",
+      "events": {
+        "user_activation": {
+          "description": "用户激活事件（北极星指标）",
+          "schema": {
+            "type": "object",
+            "properties": {
+              "event_name": { "type": "string", "const": "user_activation" },
+              "timestamp": { "type": "string", "format": "date-time" },
+              "user_id": { "type": "string" },
+              "session_id": { "type": "string" },
+              "activation_type": { 
+                "type": "string", 
+                "enum": ["first_login", "feature_usage", "goal_completion", "retention_milestone"]
+              },
+              "feature_used": { "type": "string" },
+              "time_to_activation": { "type": "number", "description": "激活所用时间（秒）" },
+              "user_segment": { "type": "string" },
+              "acquisition_channel": { "type": "string" }
+            },
+            "required": ["event_name", "timestamp", "user_id", "activation_type"]
+          },
+          "sampling_rate": 1.0,
+          "retention_days": 90
+        },
+        "conversion_funnel": {
+          "description": "转化漏斗事件",
+          "schema": {
+            "type": "object",
+            "properties": {
+              "event_name": { "type": "string", "const": "conversion_funnel" },
+              "timestamp": { "type": "string", "format": "date-time" },
+              "user_id": { "type": "string" },
+              "funnel_stage": { 
+                "type": "string", 
+                "enum": ["awareness", "interest", "consideration", "purchase", "retention"]
+              },
+              "action": { "type": "string" },
+              "value": { "type": "number" },
+              "metadata": { "type": "object" }
+            },
+            "required": ["event_name", "timestamp", "user_id", "funnel_stage", "action"]
+          },
+          "sampling_rate": 1.0,
+          "retention_days": 365
+        }
+      }
+    },
+    
+    "system_performance": {
+      "description": "系统性能指标",
+      "events": {
+        "api_request": {
+          "description": "API请求性能指标",
+          "schema": {
+            "type": "object",
+            "properties": {
+              "event_name": { "type": "string", "const": "api_request" },
+              "timestamp": { "type": "string", "format": "date-time" },
+              "request_id": { "type": "string" },
+              "endpoint": { "type": "string" },
+              "method": { "type": "string", "enum": ["GET", "POST", "PUT", "DELETE", "PATCH"] },
+              "status_code": { "type": "integer" },
+              "response_time_ms": { "type": "number" },
+              "user_id": { "type": "string" },
+              "user_agent": { "type": "string" },
+              "ip_address": { "type": "string" },
+              "request_size_bytes": { "type": "integer" },
+              "response_size_bytes": { "type": "integer" },
+              "cache_hit": { "type": "boolean" },
+              "error_message": { "type": "string" }
+            },
+            "required": ["event_name", "timestamp", "request_id", "endpoint", "method", "status_code", "response_time_ms"]
+          },
+          "sampling_rate": 0.1,
+          "retention_days": 30
+        },
+        "system_resource": {
+          "description": "系统资源使用情况",
+          "schema": {
+            "type": "object",
+            "properties": {
+              "event_name": { "type": "string", "const": "system_resource" },
+              "timestamp": { "type": "string", "format": "date-time" },
+              "host": { "type": "string" },
+              "service": { "type": "string" },
+              "cpu_usage_percent": { "type": "number" },
+              "memory_usage_percent": { "type": "number" },
+              "disk_usage_percent": { "type": "number" },
+              "network_in_bytes": { "type": "integer" },
+              "network_out_bytes": { "type": "integer" },
+              "active_connections": { "type": "integer" },
+              "queue_size": { "type": "integer" }
+            },
+            "required": ["event_name", "timestamp", "host", "service"]
+          },
+          "sampling_rate": 1.0,
+          "retention_days": 7
+        }
+      }
+    },
+    
+    "error_tracking": {
+      "description": "错误跟踪事件",
+      "events": {
+        "application_error": {
+          "description": "应用程序错误",
+          "schema": {
+            "type": "object",
+            "properties": {
+              "event_name": { "type": "string", "const": "application_error" },
+              "timestamp": { "type": "string", "format": "date-time" },
+              "error_id": { "type": "string" },
+              "error_type": { "type": "string" },
+              "error_message": { "type": "string" },
+              "stack_trace": { "type": "string" },
+              "severity": { 
+                "type": "string", 
+                "enum": ["critical", "high", "medium", "low", "info"]
+              },
+              "user_id": { "type": "string" },
+              "session_id": { "type": "string" },
+              "request_id": { "type": "string" },
+              "endpoint": { "type": "string" },
+              "user_agent": { "type": "string" },
+              "environment": { "type": "string" },
+              "version": { "type": "string" },
+              "context": { "type": "object" }
+            },
+            "required": ["event_name", "timestamp", "error_id", "error_type", "error_message", "severity"]
+          },
+          "sampling_rate": 1.0,
+          "retention_days": 90
+        },
+        "security_incident": {
+          "description": "安全事件",
+          "schema": {
+            "type": "object",
+            "properties": {
+              "event_name": { "type": "string", "const": "security_incident" },
+              "timestamp": { "type": "string", "format": "date-time" },
+              "incident_id": { "type": "string" },
+              "incident_type": { 
+                "type": "string", 
+                "enum": ["unauthorized_access", "data_breach", "malicious_request", "suspicious_activity"]
+              },
+              "severity": { 
+                "type": "string", 
+                "enum": ["critical", "high", "medium", "low"]
+              },
+              "source_ip": { "type": "string" },
+              "user_id": { "type": "string" },
+              "endpoint": { "type": "string" },
+              "user_agent": { "type": "string" },
+              "attack_vector": { "type": "string" },
+              "blocked": { "type": "boolean" },
+              "details": { "type": "object" }
+            },
+            "required": ["event_name", "timestamp", "incident_id", "incident_type", "severity"]
+          },
+          "sampling_rate": 1.0,
+          "retention_days": 365
+        }
+      }
+    },
+    
+    "user_behavior": {
+      "description": "用户行为分析",
+      "events": {
+        "page_view": {
+          "description": "页面浏览事件",
+          "schema": {
+            "type": "object",
+            "properties": {
+              "event_name": { "type": "string", "const": "page_view" },
+              "timestamp": { "type": "string", "format": "date-time" },
+              "user_id": { "type": "string" },
+              "session_id": { "type": "string" },
+              "page_url": { "type": "string" },
+              "page_title": { "type": "string" },
+              "referrer": { "type": "string" },
+              "user_agent": { "type": "string" },
+              "screen_resolution": { "type": "string" },
+              "viewport_size": { "type": "string" },
+              "load_time_ms": { "type": "number" },
+              "is_mobile": { "type": "boolean" },
+              "utm_source": { "type": "string" },
+              "utm_medium": { "type": "string" },
+              "utm_campaign": { "type": "string" }
+            },
+            "required": ["event_name", "timestamp", "session_id", "page_url"]
+          },
+          "sampling_rate": 0.5,
+          "retention_days": 30
+        },
+        "feature_usage": {
+          "description": "功能使用事件",
+          "schema": {
+            "type": "object",
+            "properties": {
+              "event_name": { "type": "string", "const": "feature_usage" },
+              "timestamp": { "type": "string", "format": "date-time" },
+              "user_id": { "type": "string" },
+              "session_id": { "type": "string" },
+              "feature_name": { "type": "string" },
+              "action": { "type": "string" },
+              "duration_ms": { "type": "number" },
+              "success": { "type": "boolean" },
+              "error_message": { "type": "string" },
+              "context": { "type": "object" }
+            },
+            "required": ["event_name", "timestamp", "user_id", "feature_name", "action"]
+          },
+          "sampling_rate": 1.0,
+          "retention_days": 60
+        }
+      }
+    }
+  },
+  
+  "slo_metrics": {
+    "description": "服务水平目标指标定义",
+    "availability": {
+      "target": 99.9,
+      "measurement_window": "30d",
+      "error_budget": 0.1
+    },
+    "latency": {
+      "p95_target_ms": 500,
+      "p99_target_ms": 1000,
+      "measurement_window": "24h"
+    },
+    "error_rate": {
+      "target_percent": 0.1,
+      "measurement_window": "24h"
+    },
+    "throughput": {
+      "min_rps": 100,
+      "measurement_window": "5m"
+    }
+  },
+  
+  "alerting_rules": {
+    "description": "告警规则配置",
+    "critical_alerts": [
+      {
+        "name": "high_error_rate",
+        "condition": "error_rate > 1% for 5 minutes",
+        "severity": "critical",
+        "notification_channels": ["pagerduty", "slack"]
+      },
+      {
+        "name": "service_down",
+        "condition": "availability < 99% for 1 minute",
+        "severity": "critical",
+        "notification_channels": ["pagerduty", "slack", "email"]
+      },
+      {
+        "name": "high_latency",
+        "condition": "p95_latency > 1000ms for 10 minutes",
+        "severity": "warning",
+        "notification_channels": ["slack"]
+      }
+    ],
+    "business_alerts": [
+      {
+        "name": "low_activation_rate",
+        "condition": "daily_activation_rate < 25% for 2 days",
+        "severity": "warning",
+        "notification_channels": ["email", "slack"]
+      },
+      {
+        "name": "conversion_drop",
+        "condition": "conversion_rate drops > 20% compared to 7-day average",
+        "severity": "warning",
+        "notification_channels": ["email"]
+      }
+    ]
+  },
+  
+  "data_collection": {
+    "description": "数据收集配置",
+    "endpoints": {
+      "events": "/api/v1/telemetry/events",
+      "metrics": "/api/v1/telemetry/metrics",
+      "logs": "/api/v1/telemetry/logs"
+    },
+    "batch_settings": {
+      "max_batch_size": 1000,
+      "max_wait_time_ms": 5000,
+      "retry_attempts": 3,
+      "retry_backoff_ms": 1000
+    },
+    "privacy_settings": {
+      "anonymize_ip": true,
+      "hash_user_ids": true,
+      "exclude_pii_fields": ["email", "phone", "address"],
+      "data_retention_days": 90
+    }
+  },
+  
+  "dashboards": {
+    "description": "监控面板配置",
+    "business_dashboard": {
+      "name": "Business Metrics",
+      "widgets": [
+        {
+          "type": "metric",
+          "title": "Daily Active Users",
+          "query": "count(distinct user_id) where event_name='page_view' group by day"
+        },
+        {
+          "type": "metric",
+          "title": "Activation Rate",
+          "query": "count(user_activation) / count(distinct user_id) * 100"
+        },
+        {
+          "type": "chart",
+          "title": "Conversion Funnel",
+          "query": "conversion_funnel events grouped by funnel_stage"
+        }
+      ]
+    },
+    "technical_dashboard": {
+      "name": "System Performance",
+      "widgets": [
+        {
+          "type": "metric",
+          "title": "Average Response Time",
+          "query": "avg(response_time_ms) where event_name='api_request'"
+        },
+        {
+          "type": "metric",
+          "title": "Error Rate",
+          "query": "count(status_code >= 400) / count(*) * 100"
+        },
+        {
+          "type": "chart",
+          "title": "Request Volume",
+          "query": "count(api_request) group by time(5m)"
+        }
+      ]
+    }
+  },
+  
+  "compliance": {
+    "description": "合规性配置",
+    "gdpr": {
+      "enabled": true,
+      "consent_required": true,
+      "data_subject_rights": ["access", "rectification", "erasure", "portability"],
+      "retention_policy": "automatic_deletion_after_retention_period"
+    },
+    "ccpa": {
+      "enabled": true,
+      "opt_out_supported": true,
+      "data_categories": ["identifiers", "commercial_info", "internet_activity"]
+    },
+    "audit_log": {
+      "enabled": true,
+      "retention_days": 2555,
+      "include_data_access": true,
+      "include_data_modifications": true
+    }
+  },
+  
+  "metadata": {
+    "schema_version": "1.0.0",
+    "last_updated": "2025-01-27T00:00:00Z",
+    "maintainer": "AgentFoundry Team",
+    "documentation_url": "https://docs.agentfoundry.com/telemetry",
+    "support_contact": "support@agentfoundry.com"
+  }
+}

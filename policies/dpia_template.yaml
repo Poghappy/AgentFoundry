@@ -1,0 +1,796 @@
+# AgentFoundry 数据保护影响评估 (DPIA) 模板
+# Data Protection Impact Assessment Template
+
+metadata:
+  template_version: "1.0.0"
+  created_date: "2024-01-15"
+  last_updated: "2024-01-15"
+  compliance_frameworks:
+    - "GDPR"
+    - "CCPA"
+    - "PIPEDA"
+  review_cycle: "quarterly"
+  responsible_team: "Privacy & Compliance"
+
+# DPIA基本信息
+dpia_info:
+  assessment_id: "DPIA-{YYYY-MM-DD}-{PROJECT_NAME}"
+  project_name: "{项目名称}"
+  assessment_date: "{评估日期}"
+  assessor_name: "{评估人员}"
+  assessor_role: "{评估人员角色}"
+  review_date: "{审查日期}"
+  approval_status: "pending|approved|rejected"
+  
+# 项目描述
+project_description:
+  overview: |
+    {项目概述 - 描述项目的主要目标、功能和预期结果}
+  
+  scope: |
+    {项目范围 - 明确项目边界和涉及的系统、流程}
+  
+  stakeholders:
+    internal:
+      - role: "项目经理"
+        name: "{姓名}"
+        contact: "{联系方式}"
+      - role: "技术负责人"
+        name: "{姓名}"
+        contact: "{联系方式}"
+      - role: "数据保护官"
+        name: "{姓名}"
+        contact: "{联系方式}"
+    
+    external:
+      - role: "第三方服务商"
+        name: "{公司名称}"
+        service: "{提供的服务}"
+        contact: "{联系方式}"
+  
+  timeline:
+    start_date: "{项目开始日期}"
+    end_date: "{项目结束日期}"
+    key_milestones:
+      - milestone: "{里程碑名称}"
+        date: "{日期}"
+        description: "{描述}"
+
+# 数据处理活动分析
+data_processing:
+  # 数据类别
+  data_categories:
+    personal_data:
+      collected: true|false
+      types:
+        - "姓名"
+        - "电子邮件"
+        - "电话号码"
+        - "地址信息"
+        - "用户ID"
+      
+      sources:
+        - "用户直接提供"
+        - "第三方API"
+        - "系统自动生成"
+        - "公开数据源"
+      
+      volume_estimate: "{预估数据量}"
+      
+    sensitive_data:
+      collected: true|false
+      types:
+        - "种族或民族出身"
+        - "政治观点"
+        - "宗教信仰"
+        - "健康数据"
+        - "生物识别数据"
+        - "犯罪记录"
+      
+      justification: |
+        {收集敏感数据的法律依据和业务必要性}
+      
+      special_protections:
+        - "加密存储"
+        - "访问控制"
+        - "审计日志"
+        - "定期删除"
+    
+    children_data:
+      collected: true|false
+      age_verification: true|false
+      parental_consent: true|false
+      special_protections: |
+        {针对儿童数据的特殊保护措施}
+  
+  # 处理目的
+  processing_purposes:
+    primary_purposes:
+      - purpose: "用户账户管理"
+        legal_basis: "合同履行"
+        description: |
+          {详细描述处理目的和必要性}
+      
+      - purpose: "服务提供"
+        legal_basis: "合法利益"
+        description: |
+          {详细描述处理目的和必要性}
+    
+    secondary_purposes:
+      - purpose: "产品改进"
+        legal_basis: "合法利益"
+        consent_required: true|false
+        opt_out_available: true|false
+  
+  # 数据主体
+  data_subjects:
+    categories:
+      - "注册用户"
+      - "潜在客户"
+      - "员工"
+      - "合作伙伴"
+    
+    estimated_numbers:
+      total: "{总数估算}"
+      breakdown:
+        - category: "注册用户"
+          count: "{数量}"
+        - category: "潜在客户"
+          count: "{数量}"
+    
+    vulnerable_groups:
+      children: true|false
+      elderly: true|false
+      disabled: true|false
+      other: "{其他脆弱群体}"
+  
+  # 数据接收者
+  data_recipients:
+    internal:
+      - department: "技术团队"
+        access_level: "完全访问"
+        purpose: "系统维护"
+        staff_count: "{人数}"
+      
+      - department: "客服团队"
+        access_level: "有限访问"
+        purpose: "客户支持"
+        staff_count: "{人数}"
+    
+    external:
+      - recipient: "云服务提供商"
+        type: "数据处理商"
+        location: "{地理位置}"
+        purpose: "数据存储"
+        safeguards: "{保护措施}"
+      
+      - recipient: "分析服务商"
+        type: "数据处理商"
+        location: "{地理位置}"
+        purpose: "数据分析"
+        safeguards: "{保护措施}"
+  
+  # 国际传输
+  international_transfers:
+    occurs: true|false
+    
+    transfers:
+      - destination: "{目的地国家/地区}"
+        adequacy_decision: true|false
+        safeguards:
+          - "标准合同条款"
+          - "约束性企业规则"
+          - "认证机制"
+        
+        purpose: "{传输目的}"
+        frequency: "一次性|定期|持续"
+        volume: "{传输数据量}"
+  
+  # 保留期限
+  retention_periods:
+    - data_type: "用户账户信息"
+      retention_period: "账户关闭后2年"
+      legal_basis: "法律要求"
+      deletion_method: "安全删除"
+    
+    - data_type: "交易记录"
+      retention_period: "7年"
+      legal_basis: "税务法规"
+      deletion_method: "归档后删除"
+    
+    automated_deletion:
+      enabled: true|false
+      schedule: "{自动删除计划}"
+      notification: true|false
+
+# 风险评估
+risk_assessment:
+  # 风险等级定义
+  risk_levels:
+    high:
+      description: "高风险 - 需要立即采取行动"
+      threshold: "影响范围广泛或后果严重"
+      actions:
+        - "立即实施额外保护措施"
+        - "考虑停止或修改处理活动"
+        - "咨询DPO或法律顾问"
+        - "可能需要咨询监管机构"
+    
+    medium:
+      description: "中等风险 - 需要采取缓解措施"
+      threshold: "影响范围有限但需要关注"
+      actions:
+        - "实施适当的技术和组织措施"
+        - "加强监控和审计"
+        - "制定应急响应计划"
+        - "定期评估风险状态"
+    
+    low:
+      description: "低风险 - 保持监控"
+      threshold: "影响最小且可控"
+      actions:
+        - "维持现有保护措施"
+        - "定期监控"
+        - "文档记录"
+        - "年度评估"
+  
+  # 隐私风险识别
+  privacy_risks:
+    - risk_id: "R001"
+      category: "未授权访问"
+      description: |
+        {风险描述 - 详细说明风险情况和可能的影响}
+      
+      likelihood:
+        score: 1-5  # 1=极低, 5=极高
+        justification: "{可能性评估理由}"
+      
+      impact:
+        score: 1-5  # 1=极低, 5=极高
+        justification: "{影响评估理由}"
+      
+      risk_level: "低|中|高|极高"  # likelihood × impact
+      
+      affected_data_subjects: "{受影响的数据主体数量}"
+      
+      potential_harm:
+        - "身份盗用"
+        - "财务损失"
+        - "声誉损害"
+        - "心理伤害"
+      
+      mitigation_measures:
+        existing:
+          - measure: "访问控制"
+            effectiveness: "高|中|低"
+            description: "{现有措施描述}"
+        
+        planned:
+          - measure: "多因素认证"
+            timeline: "{实施时间表}"
+            responsible: "{负责人}"
+            cost_estimate: "{成本估算}"
+      
+      residual_risk:
+        likelihood: 1-5
+        impact: 1-5
+        level: "低|中|高|极高"
+    
+    - risk_id: "R002"
+      category: "数据泄露"
+      description: |
+        {第二个风险的详细描述}
+      # ... 重复上述结构
+  
+  # 合规风险
+  compliance_risks:
+    gdpr_compliance:
+      lawful_basis_clarity: "符合|部分符合|不符合"
+      consent_management: "符合|部分符合|不符合"
+      data_subject_rights: "符合|部分符合|不符合"
+      breach_notification: "符合|部分符合|不符合"
+      dpo_involvement: "符合|部分符合|不符合"
+      
+      gaps:
+        - gap: "{合规差距描述}"
+          remediation: "{补救措施}"
+          timeline: "{时间表}"
+    
+    other_regulations:
+      ccpa: "符合|部分符合|不符合|不适用"
+      pipeda: "符合|部分符合|不符合|不适用"
+      sector_specific: "{行业特定法规合规状态}"
+  
+  # 技术风险
+  technical_risks:
+    - risk: "系统漏洞"
+      assessment: "{风险评估}"
+      controls: "{控制措施}"
+    
+    - risk: "数据完整性"
+      assessment: "{风险评估}"
+      controls: "{控制措施}"
+    
+    - risk: "可用性中断"
+      assessment: "{风险评估}"
+      controls: "{控制措施}"
+
+# 保护措施
+protection_measures:
+  # 技术措施
+  technical_safeguards:
+    encryption:
+      at_rest:
+        enabled: true|false
+        algorithm: "AES-256"
+        key_management: "{密钥管理方式}"
+      
+      in_transit:
+        enabled: true|false
+        protocol: "TLS 1.3"
+        certificate_management: "{证书管理}"
+      
+      in_processing:
+        enabled: true|false
+        method: "同态加密|安全多方计算"
+    
+    access_controls:
+      authentication:
+        - "多因素认证"
+        - "单点登录"
+        - "生物识别"
+      
+      authorization:
+        model: "基于角色|基于属性"
+        principle: "最小权限"
+        review_frequency: "季度"
+      
+      monitoring:
+        - "访问日志"
+        - "异常检测"
+        - "实时告警"
+    
+    data_minimization:
+      collection_limits: "{收集限制措施}"
+      processing_limits: "{处理限制措施}"
+      retention_limits: "{保留限制措施}"
+      
+      anonymization:
+        techniques:
+          - "k-匿名"
+          - "差分隐私"
+          - "数据脱敏"
+        effectiveness: "高|中|低"
+    
+    backup_recovery:
+      backup_frequency: "{备份频率}"
+      backup_location: "{备份位置}"
+      encryption: true|false
+      recovery_time: "{恢复时间目标}"
+      testing_frequency: "{测试频率}"
+  
+  # 组织措施
+  organizational_safeguards:
+    policies_procedures:
+      - policy: "数据保护政策"
+        version: "{版本号}"
+        last_updated: "{更新日期}"
+        review_frequency: "年度"
+      
+      - policy: "事件响应程序"
+        version: "{版本号}"
+        last_updated: "{更新日期}"
+        review_frequency: "年度"
+    
+    training_awareness:
+      staff_training:
+        frequency: "年度|半年度|季度"
+        topics:
+          - "数据保护基础"
+          - "GDPR要求"
+          - "事件响应"
+          - "安全最佳实践"
+        
+        completion_rate: "{完成率}%"
+        assessment: true|false
+      
+      awareness_programs:
+        - "定期通讯"
+        - "安全提醒"
+        - "最佳实践分享"
+    
+    vendor_management:
+      due_diligence:
+        security_assessment: true|false
+        privacy_assessment: true|false
+        compliance_verification: true|false
+      
+      contracts:
+        dpa_signed: true|false  # 数据处理协议
+        liability_clauses: true|false
+        audit_rights: true|false
+        termination_clauses: true|false
+      
+      monitoring:
+        regular_reviews: true|false
+        performance_metrics: true|false
+        incident_reporting: true|false
+    
+    incident_response:
+      response_team:
+        - role: "事件指挥官"
+          name: "{姓名}"
+          contact: "{联系方式}"
+        
+        - role: "技术专家"
+          name: "{姓名}"
+          contact: "{联系方式}"
+      
+      procedures:
+        detection: "{检测程序}"
+        assessment: "{评估程序}"
+        containment: "{遏制程序}"
+        notification: "{通知程序}"
+        recovery: "{恢复程序}"
+      
+      notification_requirements:
+        supervisory_authority:
+          timeline: "72小时"
+          contact: "{监管机构联系方式}"
+        
+        data_subjects:
+          timeline: "无不当延迟"
+          method: "{通知方式}"
+          threshold: "{通知阈值}"
+
+# 数据主体权利
+data_subject_rights:
+  # 权利实施机制
+  rights_implementation:
+    access_right:
+      process: "{访问权实施流程}"
+      timeline: "1个月"
+      format: "电子|纸质|其他"
+      verification: "{身份验证方法}"
+      
+    rectification_right:
+      process: "{更正权实施流程}"
+      timeline: "1个月"
+      notification_third_parties: true|false
+      
+    erasure_right:
+      process: "{删除权实施流程}"
+      timeline: "1个月"
+      exceptions:
+        - "法律义务"
+        - "公共利益"
+        - "合法权益"
+      
+      technical_implementation:
+        - "逻辑删除"
+        - "物理删除"
+        - "匿名化"
+    
+    portability_right:
+      applicable: true|false
+      format: "JSON|XML|CSV"
+      process: "{数据可携权实施流程}"
+      timeline: "1个月"
+      
+    objection_right:
+      applicable: true|false
+      process: "{反对权实施流程}"
+      timeline: "1个月"
+      impact_assessment: true|false
+    
+    restriction_right:
+      process: "{限制处理权实施流程}"
+      timeline: "1个月"
+      notification_requirements: "{通知要求}"
+  
+  # 权利行使支持
+  support_mechanisms:
+    contact_points:
+      - type: "数据保护官"
+        contact: "dpo@company.com"
+        hours: "工作日 9:00-17:00"
+      
+      - type: "客服热线"
+        contact: "+1-800-XXX-XXXX"
+        hours: "24/7"
+    
+    request_tracking:
+      system: "{请求跟踪系统}"
+      reference_number: true|false
+      status_updates: true|false
+      
+    appeals_process:
+      internal_review: true|false
+      supervisory_authority: "{监管机构联系方式}"
+      judicial_remedy: "{司法救济途径}"
+
+# 监控和审计
+monitoring_audit:
+  # 持续监控
+  continuous_monitoring:
+    metrics:
+      - metric: "数据访问频率"
+        threshold: "{阈值}"
+        alert_mechanism: "{告警机制}"
+      
+      - metric: "异常访问模式"
+        detection_method: "{检测方法}"
+        response_procedure: "{响应程序}"
+    
+    automated_controls:
+      - control: "访问日志记录"
+        coverage: "100%"
+        retention: "1年"
+      
+      - control: "异常行为检测"
+        sensitivity: "高|中|低"
+        false_positive_rate: "{误报率}%"
+  
+  # 定期审计
+  regular_audits:
+    internal_audits:
+      frequency: "年度|半年度|季度"
+      scope: "{审计范围}"
+      last_audit_date: "{最后审计日期}"
+      next_audit_date: "{下次审计日期}"
+      
+      findings:
+        - finding: "{审计发现}"
+          severity: "高|中|低"
+          remediation: "{补救措施}"
+          status: "开放|进行中|已关闭"
+    
+    external_audits:
+      frequency: "{频率}"
+      auditor: "{外部审计机构}"
+      certification: "{认证类型}"
+      last_audit_date: "{最后审计日期}"
+      
+    compliance_reviews:
+      gdpr_review:
+        frequency: "年度"
+        last_review: "{最后审查日期}"
+        findings: "{审查发现}"
+      
+      sector_specific:
+        applicable_standards: "{适用标准}"
+        compliance_status: "{合规状态}"
+
+# 决策和建议
+decision_recommendations:
+  # DPIA结论
+  dpia_conclusion:
+    overall_risk_level: "低|中|高|极高"
+    
+    risk_acceptability:
+      acceptable: true|false
+      justification: |
+        {风险可接受性判断理由}
+    
+    processing_recommendation: "批准|有条件批准|拒绝"
+    
+    conditions:
+      - condition: "{批准条件}"
+        timeline: "{实施时间表}"
+        responsible: "{负责人}"
+        verification: "{验证方法}"
+  
+  # 改进建议
+  improvement_recommendations:
+    high_priority:
+      - recommendation: "{高优先级建议}"
+        rationale: "{建议理由}"
+        implementation_cost: "{实施成本}"
+        timeline: "{时间表}"
+        responsible: "{负责人}"
+    
+    medium_priority:
+      - recommendation: "{中优先级建议}"
+        rationale: "{建议理由}"
+        implementation_cost: "{实施成本}"
+        timeline: "{时间表}"
+        responsible: "{负责人}"
+    
+    low_priority:
+      - recommendation: "{低优先级建议}"
+        rationale: "{建议理由}"
+        implementation_cost: "{实施成本}"
+        timeline: "{时间表}"
+        responsible: "{负责人}"
+  
+  # 后续行动
+  follow_up_actions:
+    immediate_actions:
+      - action: "{立即行动}"
+        deadline: "{截止日期}"
+        responsible: "{负责人}"
+        status: "待开始|进行中|已完成"
+    
+    short_term_actions:
+      - action: "{短期行动}"
+        deadline: "{截止日期}"
+        responsible: "{负责人}"
+        status: "待开始|进行中|已完成"
+    
+    long_term_actions:
+      - action: "{长期行动}"
+        deadline: "{截止日期}"
+        responsible: "{负责人}"
+        status: "待开始|进行中|已完成"
+
+# 审批和签署
+approval_signatures:
+  # 评估团队
+  assessment_team:
+    lead_assessor:
+      name: "{姓名}"
+      role: "{角色}"
+      signature: "{签名}"
+      date: "{日期}"
+    
+    technical_reviewer:
+      name: "{姓名}"
+      role: "{角色}"
+      signature: "{签名}"
+      date: "{日期}"
+    
+    legal_reviewer:
+      name: "{姓名}"
+      role: "{角色}"
+      signature: "{签名}"
+      date: "{日期}"
+  
+  # 管理层批准
+  management_approval:
+    data_protection_officer:
+      name: "{姓名}"
+      approval: "批准|有条件批准|拒绝"
+      comments: "{意见}"
+      signature: "{签名}"
+      date: "{日期}"
+    
+    project_sponsor:
+      name: "{姓名}"
+      approval: "批准|有条件批准|拒绝"
+      comments: "{意见}"
+      signature: "{签名}"
+      date: "{日期}"
+    
+    senior_management:
+      name: "{姓名}"
+      role: "{角色}"
+      approval: "批准|有条件批准|拒绝"
+      comments: "{意见}"
+      signature: "{签名}"
+      date: "{日期}"
+
+# 文档控制
+document_control:
+  version_history:
+    - version: "1.0"
+      date: "{日期}"
+      author: "{作者}"
+      changes: "初始版本"
+    
+    - version: "1.1"
+      date: "{日期}"
+      author: "{作者}"
+      changes: "{变更描述}"
+  
+  distribution_list:
+    - recipient: "{接收人}"
+      role: "{角色}"
+      delivery_method: "电子邮件|打印|系统通知"
+      date_sent: "{发送日期}"
+  
+  review_schedule:
+    next_review_date: "{下次审查日期}"
+    review_trigger_events:
+      - "重大系统变更"
+      - "法规更新"
+      - "安全事件"
+      - "年度审查"
+  
+  retention_disposal:
+    retention_period: "7年"
+    disposal_method: "安全销毁"
+    disposal_date: "{销毁日期}"
+    disposal_certificate: "{销毁证书编号}"
+
+# 附件和参考
+attachments_references:
+  supporting_documents:
+    - document: "数据流图"
+      location: "{文档位置}"
+      version: "{版本}"
+    
+    - document: "系统架构图"
+      location: "{文档位置}"
+      version: "{版本}"
+    
+    - document: "安全评估报告"
+      location: "{文档位置}"
+      version: "{版本}"
+  
+  legal_references:
+    - regulation: "GDPR"
+      article: "第35条"
+      relevance: "{相关性说明}"
+    
+    - regulation: "CCPA"
+      section: "{条款}"
+      relevance: "{相关性说明}"
+  
+  technical_standards:
+    - standard: "ISO 27001"
+      relevance: "信息安全管理"
+    
+    - standard: "ISO 27701"
+      relevance: "隐私信息管理"
+    
+    - standard: "NIST Privacy Framework"
+      relevance: "隐私风险管理"
+
+# 使用说明
+usage_instructions: |
+  本DPIA模板使用说明：
+  
+  1. 项目启动时，复制此模板并重命名为具体项目
+  2. 填写所有必填字段（标记为{必填}的字段）
+  3. 根据项目实际情况调整可选字段
+  4. 进行风险评估，确保所有风险都得到识别和评估
+  5. 制定适当的保护措施和缓解策略
+  6. 获得必要的审批和签署
+  7. 定期审查和更新DPIA
+  
+  注意事项：
+  - 高风险处理活动必须完成DPIA
+  - DPIA应在处理开始前完成
+  - 重大变更时需要更新DPIA
+  - 保留DPIA记录以证明合规性
+
+# 质量检查清单
+quality_checklist:
+  completeness:
+    - "所有必填字段已填写"
+    - "风险评估已完成"
+    - "保护措施已定义"
+    - "数据主体权利已考虑"
+    - "国际传输已评估"
+    - "保留期限已确定"
+  
+  accuracy:
+    - "数据流描述准确"
+    - "法律依据正确"
+    - "风险评估合理"
+    - "技术措施可行"
+    - "时间表现实"
+  
+  consistency:
+    - "与其他文档一致"
+    - "内部逻辑一致"
+    - "术语使用一致"
+    - "格式规范统一"
+  
+  compliance:
+    - "符合GDPR要求"
+    - "符合当地法规"
+    - "符合行业标准"
+    - "符合公司政策"
+
+---
+
+# 模板说明
+
+本DPIA模板基于GDPR第35条要求设计，同时考虑了其他主要数据保护法规的要求。模板采用YAML格式，便于自动化处理和版本控制。
+
+使用时请根据具体项目情况调整内容，确保评估的准确性和完整性。对于高风险项目，建议咨询法律专家或数据保护专家。
+
+**版本**: 1.0.0  
+**最后更新**: 2024年1月15日  
+**维护团队**: Privacy & Compliance Team
