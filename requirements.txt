@@ -13,7 +13,7 @@ redis==4.6.0
 # Authentication & Security
 pyjwt==2.8.0
 passlib[bcrypt]==1.7.4
-cryptography==41.0.4
+cryptography==46.0.5
 
 # HTTP Client
 httpx==0.24.1
