@@ -76,7 +76,7 @@
     "prometheus-client": "^14.2.0",
     "opentelemetry-api": "^1.4.1",
     "yaml": "^2.3.1",
-    "markdown-it": "^13.0.1",
+    "markdown-it": "^14.1.1",
     "ajv": "^8.12.0"
   },
   "devDependencies": {
